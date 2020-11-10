@@ -111,7 +111,7 @@
                 </el-input>
 
                 <!--更新时间-->
-                <vm-emerge-picker1 @changeTime='changeTime1'></vm-emerge-picker1>
+                <vm-emerge-picker1 @changeTime1='changeTime1'></vm-emerge-picker1>
 
                 <!--标签-->
                 <el-input class="s_key1 s_key1_ok"
@@ -1009,10 +1009,10 @@ export default {
     get_list_threat () {
       this.table.loading = true;
       let params_alert = {
-        threat: ''
+        fall_certainty: ''
       };
-      if (this.params.threat == 1) {
-        params_alert.threat = 1;
+      if (this.params.fall_certainty == 1) {
+        params_alert.fall_certainty = 1;
       }
       this.$axios.get('/yiiapi/' + this.threats + '/list', {
         params: {
@@ -1072,31 +1072,6 @@ export default {
         this.params.update_etime = '';
       }
     },
-    //搜索按鈕點擊事件
-    submitClick () {
-      this.table.pageNow = 1;
-      this.get_list_threat();
-    },
-    //重置按鈕點擊事件
-    resetClick () {
-      this.params.fall_certainty = '';
-      this.params.status = '';
-      this.params.degree = '';
-      this.params.start_time = '';
-      this.params.end_time = '';
-      this.params.category = '';
-      this.params.indicator = '';
-      this.params.src_ip = '';
-      this.params.dest_ip = '';
-      this.params.update_stime = '';
-      this.params.update_etime = '';
-      this.params.label = '';
-      //this.params.sort = 'degree';
-
-      $(document.querySelector('.el-button--text')).trigger('click');
-      this.table.pageNow = 1;
-      this.get_list_threat();
-    },
 
     //每頁多少條切換
     handleSizeChange (val) {
@@ -1109,26 +1084,6 @@ export default {
       this.table.pageNow = val;
       this.get_list_threat();
     },
-    //告警时间
-    changeTime (data) {
-      if (data) {
-        this.params.start_time = (data[0].valueOf() / 1000).toFixed(0);
-        this.params.end_time = (data[1].valueOf() / 1000).toFixed(0);
-      } else {
-        this.params.start_time = '';
-        this.params.end_time = '';
-      }
-    },
-    //更新时间
-    changeTime1 (data) {
-      if (data) {
-        this.params.update_stime = (data[0].valueOf() / 1000).toFixed(0);
-        this.params.update_etime = (data[1].valueOf() / 1000).toFixed(0);
-      } else {
-        this.params.update_stime = '';
-        this.params.update_etime = '';
-      }
-    },
     //搜索按鈕點擊事件
     submitClick () {
       this.table.pageNow = 1;
@@ -1150,7 +1105,7 @@ export default {
       this.params.label = '';
       //this.params.sort = 'degree';
 
-      $(document.querySelector('.el-button--text')).trigger('click');
+      $(document.querySelectorAll('.el-button--text')).trigger('click');
       this.table.pageNow = 1;
       this.get_list_threat();
     },

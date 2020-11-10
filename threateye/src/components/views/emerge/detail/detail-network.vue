@@ -1587,8 +1587,6 @@ export default {
     //新加工单列表勾选某一条记录
     handle_sel_table_add_works (row) {
       // el-radio单选框,不需要这一步
-      console.log('&&&&&3434')
-      console.log(row)
       this.table_add_works.multipleSelection = row;
     },
 
@@ -1737,7 +1735,7 @@ export default {
       })
         .then(response => {
 
-          //console.log(response.data.data.network_event);
+          console.log(response.data);
 
           this.loading = false;
           let attr = [];
@@ -2665,7 +2663,6 @@ export default {
       }
     },
     download_sandbox (value, item) {
-
       this.$axios.get('/yiiapi/site/check-auth-exist', {
         params: {
           pathInfo: 'yararule/download',

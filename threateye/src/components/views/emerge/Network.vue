@@ -154,7 +154,7 @@
             </el-input>
 
             <!--更新时间-->
-            <vm-emerge-picker1 @changeTime='changeTime1'></vm-emerge-picker1>
+            <vm-emerge-picker1 @changeTime1='changeTime1'></vm-emerge-picker1>
 
             <!--标签-->
             <el-input class="s_key1 s_key1_ok"
@@ -1157,7 +1157,7 @@ export default {
       this.params.label = '';
       //this.params.sort = 'degree';
 
-      $(document.querySelector('.el-button--text')).trigger('click');
+      $(document.querySelectorAll('.el-button--text')).trigger('click');
       this.table.pageNow = 1;
       this.get_list_risk();
     },
