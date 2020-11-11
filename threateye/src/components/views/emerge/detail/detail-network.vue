@@ -438,50 +438,67 @@
                     tooltip-effect="dark"
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
-            <el-table-column prop="alert_time"
-                             label="时间"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="category"
-                             label="告警类型"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="indicator"
-                             label="威胁指标"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="src_ip"
-                             label="源地址"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="dest_ip"
-                             label="目的地址"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="application"
-                             label="应用"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column label="威胁等级"
-                             align="center">
-              <template slot-scope="scope">
-                <span class="btn_alert_background"
-                      :class="{'high_background':scope.row.degree =='高','mid_background':scope.row.degree =='中','low_background':scope.row.degree =='低'}">
-                  {{ scope.row.degree | degree_sino }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="状态"
-                             align="center"
-                             width="80"
-                             show-overflow-tooltip>
-              <template slot-scope="scope">{{ scope.row.status | alert_status }}</template>
-            </el-table-column>
+            <template v-for="(item, index) in dropCol">
+              <!--告警时间-->
+              <el-table-column align="center"
+                               v-if="dropCol[index].prop == 'alert_time'"
+                               show-overflow-tooltip
+                               min-width="150"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.alert_time | time }}</template>
+              </el-table-column>
+              <!--威胁等级-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'degree'"
+                               show-overflow-tooltip
+                               min-width="100"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">
+                  <span class="btn_alert_background"
+                        :class="{'high_background':scope.row.degree =='高',
+                        'mid_background':scope.row.degree =='中','low_background':scope.row.degree =='低'}">
+                    {{ scope.row.degree | degree_sino }}</span>
+                </template>
+              </el-table-column>
+              <!--失陷确定性-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'fall_certainty'"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">
+                  <span :class="{'fall_certainty':scope.row.fall_certainty == '1'}">
+                    {{ scope.row.fall_certainty | certainty }}</span>
+                </template>
+              </el-table-column>
+              <!--状态-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'status'"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.status | alert_status }}</template>
+              </el-table-column>
+              <!--更新时间-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'updated_at'"
+                               show-overflow-tooltip
+                               min-width="150"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.updated_at | time }}</template>
+              </el-table-column>
+              <!--其他-->
+              <el-table-column align="center"
+                               v-else
+                               min-width="100"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+              </el-table-column>
+            </template>
           </el-table>
           <el-pagination class="pagination_box"
                          @size-change="handleSizeChange_now"
@@ -504,50 +521,67 @@
                     tooltip-effect="dark"
                     style="width: 100%"
                     @selection-change="handleSelectionChange">
-            <el-table-column prop="alert_time"
-                             label="时间"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="category"
-                             label="告警类型"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="indicator"
-                             label="威胁指标"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="src_ip"
-                             label="源地址"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="dest_ip"
-                             label="目的地址"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column prop="application"
-                             label="应用"
-                             align="center"
-                             show-overflow-tooltip>
-            </el-table-column>
-            <el-table-column align="center"
-                             label="威胁等级">
-              <template slot-scope="scope">
-                <span class="btn_alert_background"
-                      :class="{'high_background':scope.row.degree =='高','mid_background':scope.row.degree =='中','low_background':scope.row.degree =='低'}">
-                  {{ scope.row.degree | degree_sino }}</span>
-              </template>
-            </el-table-column>
-            <el-table-column label="状态"
-                             align="center"
-                             width="80"
-                             show-overflow-tooltip>
-              <template slot-scope="scope">{{ scope.row.status | alert_status }}</template>
-            </el-table-column>
+            <template v-for="(item, index) in dropCol">
+              <!--告警时间-->
+              <el-table-column align="center"
+                               v-if="dropCol[index].prop == 'alert_time'"
+                               show-overflow-tooltip
+                               min-width="150"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.alert_time | time }}</template>
+              </el-table-column>
+              <!--威胁等级-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'degree'"
+                               show-overflow-tooltip
+                               min-width="100"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">
+                  <span class="btn_alert_background"
+                        :class="{'high_background':scope.row.degree =='高',
+                        'mid_background':scope.row.degree =='中','low_background':scope.row.degree =='低'}">
+                    {{ scope.row.degree | degree_sino }}</span>
+                </template>
+              </el-table-column>
+              <!--失陷确定性-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'fall_certainty'"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">
+                  <span :class="{'fall_certainty':scope.row.fall_certainty == '1'}">
+                    {{ scope.row.fall_certainty | certainty }}</span>
+                </template>
+              </el-table-column>
+              <!--状态-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'status'"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.status | alert_status }}</template>
+              </el-table-column>
+              <!--更新时间-->
+              <el-table-column align="center"
+                               v-else-if="dropCol[index].prop == 'updated_at'"
+                               show-overflow-tooltip
+                               min-width="150"
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+                <template slot-scope="scope">{{ scope.row.updated_at | time }}</template>
+              </el-table-column>
+              <!--其他-->
+              <el-table-column align="center"
+                               v-else
+                               min-width="100"
+                               show-overflow-tooltip
+                               :prop="dropCol[index].prop"
+                               :label="item.label">
+              </el-table-column>
+            </template>
           </el-table>
           <el-pagination class="pagination_box"
                          @size-change="handleSizeChange_old"
@@ -913,6 +947,19 @@ export default {
   name: "detail-network",
   data () {
     return {
+      dropCol: [],
+      fieldList: [{ checked: true, disabled: true, name: "告警时间", alias: 'alert_time' },
+        { checked: true, disabled: true, name: "告警类型", alias: 'category' },
+        { checked: true, disabled: true, name: "源地址", alias: 'src_ip' },
+        { checked: true, disabled: true, name: "目的地址", alias: 'dest_ip' },
+        { checked: true, disabled: false, name: "威胁指标", alias: 'indicator' },
+        { checked: true, disabled: false, name: "应用", alias: 'application' },
+        { checked: true, disabled: false, name: "威胁等级", alias: 'degree' },
+        { checked: true, disabled: false, name: "失陷确定性", alias: 'fall_certainty' },
+        { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
+        { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
+        { checked: false, disabled: false, name: "标签", alias: 'labels' },
+        { checked: true, disabled: false, name: "状态", alias: 'status' }],
       loading: false,
       network_work_order: {
         work_name: '',
@@ -1418,7 +1465,6 @@ export default {
         // 告警数组
         network_detail: []
       },
-
       //
       table_alerts: {
         tableData: [],
@@ -1448,7 +1494,8 @@ export default {
         remarks: "",
         multiple: [],
         old_as: [],
-      }
+      },
+      network_event:{}
     };
   },
   components: {
@@ -1457,6 +1504,8 @@ export default {
   mounted () {
     this.check_passwd()
     this.get_data();
+
+    this.column_deploy();
     // detail: val.id, type: 'risks'
     // horizontalthreat  横向威胁告警  lateral
     // externalthreat  外部威胁告警  outside
@@ -1495,7 +1544,26 @@ export default {
           }
         })
     },
-    /**************************************************************************************************************/
+
+    //威胁资产
+    column_deploy () {
+      this.$axios.get('/yiiapi/site/field-list')
+        .then((resp) => {
+          this.dropCol = [];
+          let { status, data } = resp.data;
+          if (status == 0) {
+            let config = data.config.fields;
+            for (var key of config) {
+              this.fieldList.forEach(item => {
+                if (item.alias == key) {
+                  this.dropCol.push({ label: item.name, prop: item.alias })
+                }
+              });
+            }
+          }
+        });
+    },
+    /*************************************************/
     /***************新加到工单*****************/
 
     //添加到工单打开
@@ -1693,7 +1761,7 @@ export default {
       this.get_table_works_list();
     },
 
-    /**************************************************************************************************************/
+    /*********************************************/
     // ^[0-9]*$
     // _-.@
     get_rex (str) {
@@ -1735,7 +1803,8 @@ export default {
       })
         .then(response => {
 
-          console.log(response.data);
+          this.network_event = response.data.data.network_event;
+          //console.log(this.network_event);
 
           this.loading = false;
           let attr = [];
@@ -2590,10 +2659,26 @@ export default {
       }
 
     },
-    //网络事件下载
+    // 网络事件下载
     download_network(){
-      var url1 = '/yiiapi/report/DownloadReport?id=' + item.id;
-      window.location.href = url1;
+
+      console.log(this.network_event)
+      var funDownload = function (content, filename) {
+        // 创建隐藏的可下载链接
+        var eleLink = document.createElement("a");
+        eleLink.download = filename;
+        eleLink.style.display = "none";
+        // 字符内容转变成blob地址
+        var blob = new Blob([JSON.stringify(content)]);
+        //eleLink.href = URL.createObjectURL(blob);
+        eleLink.href = window.URL.createObjectURL(blob);
+        // 触发点击
+        document.body.appendChild(eleLink);
+        eleLink.click();
+        // 然后移除
+        document.body.removeChild(eleLink);
+      };
+      funDownload(this.network_event, "网络事件.log");
     },
     // 下载payload
     download (value, item) {
@@ -2802,7 +2887,6 @@ export default {
       this.emerge_list.old_data.page = val;
       this.old_list(this.network_times_active.indicator);
     },
-
     // 状态变更
     change_state (item) {
       //console.log(item);
@@ -2888,7 +2972,7 @@ export default {
           label_list.push(element.name)
         }
       });
-      /*  var label = ''
+        var label = ''
        // horizontalthreat  横向威胁告警  lateral
        // externalthreat  外部威胁告警  outside
        // outreachthreat  外联威胁告警  outreath
@@ -2910,9 +2994,7 @@ export default {
            break;
          default:
            break;
-       }*/
-
-
+       }
 
       /* this.$axios.put(label, {
          id: this.$route.query.detail,
@@ -2920,7 +3002,7 @@ export default {
        })*/
 
       //ycl 2020/11/04
-      var label = '/yiiapi/site/label-edit';
+     // var label = '/yiiapi/site/label-edit';
 
       this.$axios.put(label, {
         id: this.$route.query.detail,
@@ -3135,13 +3217,21 @@ export default {
       }
     },
 
-
-
     time_active (index) {
       this.time_choose = index;
-      console.log(this.network_times);
       this.network_times_active = this.network_times[index]
       console.log(this.network_times_active);
+
+      //2020/11/11
+      var alarm_merger = this.network_times_active.alarm_merger;
+      if(alarm_merger){
+        this.network_event = alarm_merger[0].network_event;
+      }else{
+        this.network_event = this.network_times_active.network_event;
+      }
+
+    //console.info(this.network_event)
+      //2020/11/11
       this.new_list(this.network_times_active.indicator);
       this.old_list(this.network_times_active.indicator);
     },
@@ -3158,7 +3248,7 @@ export default {
     },
     handleSelectionChange () { },
     handleClick (tab, event) {
-      console.log(tab);
+     // console.log(tab);
     },
     //工单任务选择
     change_task (command) {
@@ -3278,7 +3368,6 @@ export default {
     add_closed_state () {
       this.worksheets_data.pop = false;
     },
-
 
     //新加到工单确定
     add_ok_worksheets () {
@@ -3579,22 +3668,6 @@ export default {
 @import '../../../../assets/css/less/common-table-pattern.less';
 @import '../../../../assets/css/less/common-dropdown.less';
 @import '../../../../assets/css/less/reset_css/reset_table.less';
-// .reset_table {
-//   .el-table__header-wrapper {
-//     .el-table__header {
-//       thead.has-gutter {
-//         th {
-//           background: #f8f8f8 !important;
-//           .cell {
-//             font-family: PingFangMedium;
-//             color: #333;
-//             font-size: 14px;
-//           }
-//         }
-//       }
-//     }
-//   }
-// }
 .el-input__inner {
   background: #f8f8f8;
   border: 0;
@@ -3606,23 +3679,6 @@ export default {
     color: #606266;
   }
 }
-// tab栏
-// .emerge_table {
-//   th {
-//     .cell {
-//       font-family: PingFangMedium;
-//       font-size: 14px;
-//       color: #333333;
-//     }
-//   }
-//   td {
-//     .cell {
-//       font-family: PingFang;
-//       font-size: 14px;
-//       color: #666;
-//     }
-//   }
-// }
 .detail-network {
   .pagination_box {
     margin: 24px 0;
