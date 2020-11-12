@@ -1013,9 +1013,11 @@ export default {
     //列拖拽
     columnDrop () {
       const wrapperTr = document.querySelector('.common-table_alert tr');
+      //this.sortable = null;
+
       this.sortable = Sortable.create(wrapperTr, {
-        //handle: '.common-table_alert',
-        animation: 180,
+        handle: '.common-table_alert',
+        animation: 0,
         delay: 0,
         onEnd: evt => {
           let newIndex = evt.newIndex - 2;
@@ -1025,8 +1027,8 @@ export default {
           this.dropCol.splice(newIndex, 0, oldItem);
 
           this.label_submit_click();
-
           this.randomKey += 1;
+
         }
       });
     },
@@ -1740,7 +1742,7 @@ export default {
                 }
               })
                 .then(response => {
-                  
+
                   var url1 = "/yiiapi/alert/export-alerts?start_time=" + this.old_params.start_time
                     + '&end_time=' + this.old_params.end_time
                     + '&fall_certainty=' + this.old_params.fall_certainty
