@@ -726,6 +726,20 @@ export default {
         loading: true,
         data_show: false,
       },
+      old_params:{
+        category:'',
+        indicator: '',
+        start_time: '',
+        end_time: '',
+        fall_certainty: '',
+        status: '',
+        degree: '',
+        src_ip: '',
+        dest_ip: '',
+        update_stime: '',
+        update_etime:'',
+        label: ''
+      },
       params: {
         fall_certainty: '',
         status: '',
@@ -1026,7 +1040,6 @@ export default {
 
     //配置到确定
     label_submit_click (args) {
-
       let fieldAttr = [];
       fieldAttr = this.dropCol.map(item => {
         return item.prop;
@@ -1054,9 +1067,7 @@ export default {
 
     //配置列弹窗关闭事件
     dropdown_hide (val) {
-      if (!val) {
-        this.label_cancel_Click();
-      }
+      if (!val) {this.label_cancel_Click();}
     },
     /**
      * 2020/10/28ycl新加功能
@@ -1067,26 +1078,28 @@ export default {
       let params_alert = {
         fall_certainty: ''
       };
-      if (this.params.fall_certainty == 1) {
+      if (this.old_params.fall_certainty == 1) {
         params_alert.fall_certainty = 1;
       }
+
       this.$axios.get('/yiiapi/alert/list', {
         params: {
-          start_time: this.params.start_time,
-          end_time: this.params.end_time,
+          category:this.old_params.category,
+          indicator:this.old_params.indicator,
+          start_time: this.old_params.start_time,
+          end_time: this.old_params.end_time,
           fall_certainty: params_alert.fall_certainty,
-          status: this.params.status,
-          degree: this.params.degree,
+          status: this.old_params.status,
+          degree: this.old_params.degree,
+          src_ip:this.old_params.src_ip,
+          dest_ip:this.old_params.dest_ip,
+          update_stime:this.old_params.update_stime,
+          update_etime:this.old_params.update_etime,
+          label:this.old_params.label,
+
+          sort: this.params.sort,
           page: this.table.pageNow,
-          rows: this.table.eachPage,
-          category:this.params.category,
-          indicator:this.params.indicator,
-          src_ip:this.params.src_ip,
-          dest_ip:this.params.dest_ip,
-          update_stime:this.params.update_stime,
-          update_etime:this.params.update_etime,
-          label:this.params.label,
-          sort: this.params.sort
+          rows: this.table.eachPage
         }
       }).then(resp => {
 
@@ -1138,6 +1151,20 @@ export default {
     //搜索按鈕點擊事件
     submitClick () {
       this.table.pageNow = 1;
+
+      this.old_params.category = this.params.category;
+      this.old_params.indicator = this.params.indicator;
+      this.old_params.start_time = this.params.start_time;
+      this.old_params.end_time = this.params.end_time;
+      this.old_params.fall_certainty = this.params.fall_certainty;
+      this.old_params.status = this.params.status;
+      this.old_params.degree = this.params.degree;
+      this.old_params.src_ip = this.params.src_ip;
+      this.old_params.dest_ip = this.params.dest_ip;
+      this.old_params.update_stime = this.params.update_stime;
+      this.old_params.update_etime = this.params.update_etime;
+      this.old_params.label = this.params.label;
+
       this.get_list_risk();
     },
 
@@ -1156,6 +1183,19 @@ export default {
       this.params.update_etime = '';
       this.params.label = '';
       //this.params.sort = 'degree';
+
+      this.old_params.category = this.params.category;
+      this.old_params.indicator = this.params.indicator;
+      this.old_params.start_time = this.params.start_time;
+      this.old_params.end_time = this.params.end_time;
+      this.old_params.fall_certainty = this.params.fall_certainty;
+      this.old_params.status = this.params.status;
+      this.old_params.degree = this.params.degree;
+      this.old_params.src_ip = this.params.src_ip;
+      this.old_params.dest_ip = this.params.dest_ip;
+      this.old_params.update_stime = this.params.update_stime;
+      this.old_params.update_etime = this.params.update_etime;
+      this.old_params.label = this.params.label;
 
       $(document.querySelectorAll('.el-button--text')).trigger('click');
       this.table.pageNow = 1;
@@ -1700,20 +1740,21 @@ export default {
                 }
               })
                 .then(response => {
-                  var url1 = "/yiiapi/alert/export-alerts?start_time=" + this.params.start_time
-                    + '&end_time=' + this.params.end_time
-                    + '&fall_certainty=' + this.params.fall_certainty
-                    + '&status=' + this.params.status
-                    + '&degree=' + this.params.degree
+                  
+                  var url1 = "/yiiapi/alert/export-alerts?start_time=" + this.old_params.start_time
+                    + '&end_time=' + this.old_params.end_time
+                    + '&fall_certainty=' + this.old_params.fall_certainty
+                    + '&status=' + this.old_params.status
+                    + '&degree=' + this.old_params.degree
                     + '&page=' + this.table.pageNow
                     + '&rows=' + this.table.eachPage
-                    + '&category=' + this.params.category
-                    + '&indicator=' + this.params.indicator
-                    + '&src_ip=' + this.params.src_ip
-                    + '&dest_ip=' + this.params.dest_ip
-                    + '&update_stime=' + this.params.update_stime
-                    + '&update_etime=' + this.params.update_etime
-                    + '&label=' + this.params.label;
+                    + '&category=' + this.old_params.category
+                    + '&indicator=' + this.old_params.indicator
+                    + '&src_ip=' + this.old_params.src_ip
+                    + '&dest_ip=' + this.old_params.dest_ip
+                    + '&update_stime=' + this.old_params.update_stime
+                    + '&update_etime=' + this.old_params.update_etime
+                    + '&label=' + this.old_params.label;
                   window.location.href = url1;
                 })
                 .catch(error => {

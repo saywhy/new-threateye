@@ -844,6 +844,13 @@ export default {
           label: "已取消"
         }
       ],
+      old_params: {
+        key: "",
+        priority: "",
+        status: "",
+        startTime: "",
+        endTime: "",
+      },
       params: {
         key: "",
         priority: "",
@@ -948,9 +955,7 @@ export default {
           frist: true,
           new_contet: true,
         },
-        data: {
-
-        },
+        data: {},
         level_list: [
           {
             value: "highest",
@@ -1137,10 +1142,8 @@ export default {
           if (status == 0) {
             let { data, count, maxPage, pageNow } = datas;
 
-            console.log(data)
             let that = this;
 
-            console.log(this.task_params.multiple_alerts)
             data.forEach(element => {
               this.table_alerts.multipleSelection.forEach(function (item) {
                 if (element.id == item.id) {
@@ -1163,35 +1166,36 @@ export default {
     //工单中心列表
     get_list_works () {
       this.table.loading = true;
-      console.log('************');
+
       let params_status = '';
 
       if (this.owned == 'created') {
-        if (this.params.status == '') {
+        if (this.old_params.status == '') {
           params_status = 'default';
-        } else if (this.params.status == 'all') {
+        } else if (this.old_params.status == 'all') {
           params_status = '';
         } else {
-          params_status = this.params.status;
+          params_status = this.old_params.status;
         }
       } else {
-        if (this.params.status == '') {
+        if (this.old_params.status == '') {
           params_status = '';
-        } else if (this.params.status == 'all') {
+        } else if (this.old_params.status == 'all') {
           params_status = '';
         } else {
-          params_status = this.params.status;
+          params_status = this.old_params.status;
         }
       }
 
       this.$axios.get('/yiiapi/workorder/list',
         {
           params: {
-            stime: this.params.startTime,
-            etime: this.params.endTime,
+            key_word: this.old_params.key,
+            stime: this.old_params.startTime,
+            etime: this.old_params.endTime,
+            priority: this.old_params.priority,
             status: params_status,
-            priority: this.params.priority,
-            key_word: this.params.key,
+
             owned: this.owned,
             page: this.table.pageNow,
             rows: this.table.eachPage
@@ -1223,8 +1227,8 @@ export default {
         this.params.startTime = (data[0].valueOf() / 1000).toFixed(0);
         this.params.endTime = (data[1].valueOf() / 1000).toFixed(0);
       } else {
-        this.params.startTime = ''
-        this.params.endTime = ''
+        this.params.startTime = '';
+        this.params.endTime = '';
       }
     },
 
@@ -1232,20 +1236,34 @@ export default {
     //搜索按鈕點擊事件
     submitClick () {
       this.table.pageNow = 1;
+
+      this.old_params.key = this.params.key;
+      this.old_params.startTime = this.params.startTime;
+      this.old_params.endTime = this.params.endTime;
+      this.old_params.priority = this.params.priority;
+      this.old_params.status = this.params.status;
+
       this.get_list_works();
     },
 
     //重置按鈕點擊事件
     resetClick () {
-      this.params = {
-        key: "",
-        priority: "",
-        status: "",
-        startTime: "",
-        endTime: ""
-      };
-      $(document.querySelector('.el-button--text')).trigger('click');
       this.table.pageNow = 1;
+
+      this.params.key = '';
+      this.params.priority = '';
+      this.params.status = '';
+      this.params.startTime = '';
+      this.params.endTime = '';
+
+      this.old_params.key = this.params.key;
+      this.old_params.startTime = this.params.startTime;
+      this.old_params.endTime = this.params.endTime;
+      this.old_params.priority = this.params.priority;
+      this.old_params.status = this.params.status;
+
+      $(document.querySelector('.el-button--text')).trigger('click');
+
       this.get_list_works();
     },
 
@@ -1527,11 +1545,6 @@ export default {
 
         console.log('下一步')
 
-
-
-        // if(){
-
-        // }
         this.get_list_assets_info();
         this.get_list_alerts_info();
       }
