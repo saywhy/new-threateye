@@ -1245,8 +1245,8 @@ export default {
     headerDragend(evt){
       console.log('headerDragend')
       //this.randomKey += 1;
-      //console.log(evt)
-      //this.columnDrop();
+
+      this.columnDrop();
     },
     //列排序
     header_cell (val) {
