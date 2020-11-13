@@ -251,12 +251,13 @@
           </el-col>
         </el-row>
       </el-form>
-      <!--:render-header="col"-->
-      <el-row class="common-table-pattern">
+      <!--:render-header="col"         :key="randomKey"-->
+      <el-row class="common-table-pattern table_wrap">
         <el-col :span="24">
           <el-table ref="multipleTable"
                     align="center"
                     border
+                    id="table_wrap_alert"
                     class="common-table common-table_alert"
                     v-loading="table.loading"
                     :data="table.tableData"
@@ -268,6 +269,7 @@
                     @header-click="header_click"
                     @sort-change="header_cell"
                     row-key="id"
+                    @header-dragend="headerDragend"
                     :key="randomKey"
                     @row-click="detail_click">
             <el-table-column label=" "
@@ -1013,11 +1015,10 @@ export default {
     //列拖拽
     columnDrop () {
       const wrapperTr = document.querySelector('.common-table_alert tr');
-      //this.sortable = null;
-
       this.sortable = Sortable.create(wrapperTr, {
-        handle: '.common-table_alert',
-        animation: 0,
+        only: '.table_wrap',
+        containment:'#table_wrap_alert',
+        animation: 180,
         delay: 0,
         onEnd: evt => {
           let newIndex = evt.newIndex - 2;
@@ -1027,8 +1028,11 @@ export default {
           this.dropCol.splice(newIndex, 0, oldItem);
 
           this.label_submit_click();
-          this.randomKey += 1;
 
+
+
+
+         // this.sortable.destroy();
         }
       });
     },
@@ -1058,6 +1062,8 @@ export default {
             this.$refs.messageDrop.hide();
             //this.table.pageNow = 1;
             this.get_list_risk();
+
+            this.randomKey += 1;
           } else {
             this.$message({
               message: '修改错误！',
@@ -1124,6 +1130,11 @@ export default {
           this.table.pageNow = pageNow;
 
           this.columnDrop();
+
+
+
+
+         // this.column_deploy();
         }
       })
         .catch(error => {
@@ -1150,6 +1161,7 @@ export default {
         this.params.update_etime = '';
       }
     },
+
     //搜索按鈕點擊事件
     submitClick () {
       this.table.pageNow = 1;
@@ -1230,8 +1242,15 @@ export default {
     header_click (val) {
       this.detail_click_val = {}
     },
+    headerDragend(evt){
+      console.log('headerDragend')
+      //this.randomKey += 1;
+      //console.log(evt)
+      //this.columnDrop();
+    },
     //列排序
     header_cell (val) {
+
       if(val.prop == 'updated_at'){
         this.params.sort = 'updated_at';
       }else if(val.prop == 'degree'){
@@ -1256,6 +1275,7 @@ export default {
     mouseup (event) {
       this.newPositon.x = event.clientX;
       this.newPositon.y = event.clientY;
+
       if (this.oldPositon.x == this.newPositon.x) {
         setTimeout(() => {
           if (this.detail_click_val.id) {
@@ -2393,4 +2413,5 @@ export default {
       }
     }
   }
+   //.el-table th.gutter{display: table-cell!important;}
 </style>
