@@ -268,8 +268,8 @@
                     @selection-change="handleSelChange"
                     @header-click="header_click"
                     @sort-change="header_cell"
-                    row-key="id"
                     @header-dragend="headerDragend"
+                    row-key="id"
                     :key="randomKey"
                     @row-click="detail_click">
             <el-table-column label=" "
@@ -1017,8 +1017,8 @@ export default {
       const wrapperTr = document.querySelector('.common-table_alert tr');
       this.sortable = Sortable.create(wrapperTr, {
         only: '.table_wrap',
-        containment:'#table_wrap_alert',
         animation: 180,
+        preventOnFilter:true,
         delay: 0,
         onEnd: evt => {
           let newIndex = evt.newIndex - 2;
@@ -1029,8 +1029,7 @@ export default {
 
           this.label_submit_click();
 
-
-
+          this.randomKey += 1;
 
          // this.sortable.destroy();
         }
@@ -1083,6 +1082,7 @@ export default {
     // 获取告警列表
     get_list_risk () {
       this.table.loading = true;
+
       let params_alert = {
         fall_certainty: ''
       };
@@ -1130,11 +1130,6 @@ export default {
           this.table.pageNow = pageNow;
 
           this.columnDrop();
-
-
-
-
-         // this.column_deploy();
         }
       })
         .catch(error => {
@@ -1245,8 +1240,19 @@ export default {
     headerDragend(evt){
       console.log('headerDragend')
       //this.randomKey += 1;
+      if(this.sortable){
+        //this.sortable.destroy()
 
-      this.columnDrop();
+        //console.log(this.sortable)
+
+       // this.sortable = null;
+      }
+
+      setTimeout(() => {
+        console.log('444')
+        this.columnDrop();
+
+      },500)
     },
     //列排序
     header_cell (val) {
