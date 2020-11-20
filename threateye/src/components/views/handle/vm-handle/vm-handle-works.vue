@@ -1835,8 +1835,6 @@ export default {
           this.selected_list = []
           let { status, data } = resp.data;
 
-          console.log("*(*(*(*(*")
-          console.log(data);
           // 储存资产数组
           this.edit.data.risk_asset_cn = []
           if (data.risk_asset && data.risk_asset.length != 0) {
@@ -1916,8 +1914,6 @@ export default {
         } else if (this.edit.data.type == 'alert') {
           this.get_list_alert()
         }
-        console.log(this.edit.data.risk_asset_cn);
-        console.log(this.edit.data.risk_alert_cn);
         this.edit.task.frist = false;
 
       }
@@ -1989,6 +1985,7 @@ export default {
           });
         });
     },
+
     getRowKeys (row) {
       return row.id;
     },
@@ -2022,19 +2019,20 @@ export default {
     },
     //编辑工单保存
     prev_task_handle_save_edit () {
-      console.log(this.edit.handle_sel);
-
-
       this.edit.table_operator.forEach(element => {
         this.edit.perator.push(element.username)
       });
       var handle_sel_list = []
+
+      console.log(this.edit.handle_sel);
+
       this.edit.handle_sel.forEach(element => {
         handle_sel_list.push(element.id)
       });
 
       handle_sel_list = handle_sel_list.concat(this.selected_list)
       handle_sel_list = [...new Set(handle_sel_list)];
+
       let all_params = {
         workorder_edit: '1',
         id: this.edit.data.id,
@@ -2058,6 +2056,8 @@ export default {
         // }
         all_params.te_alert = handle_sel_list
       }
+
+      console.log('****')
       console.log(all_params);
       this.handle.save = true
       this.$axios.post('/yiiapi/workorder/add', all_params)
