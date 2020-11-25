@@ -813,6 +813,7 @@ export default {
       this.equipment_detail.title.ip = params.dev_ip
       this.equipment_detail.title.name = params.dev_name
       this.loading = true;
+
       this.$axios.get('/yiiapi/alert/dev-state', {
         params: {
           ip: params.dev_ip
@@ -824,7 +825,9 @@ export default {
             status,
             data
           } = response.data;
-         // console.log(data);
+
+          console.log('&&**')
+          console.log(data);
           data.forEach(element => {
             this.equipment_detail.cpu.unshift(element.cpu)
             this.equipment_detail.mem.unshift(element.mem)
@@ -938,7 +941,6 @@ export default {
             }
           },
           axisLabel: {
-
             textStyle: {
               color: "#666666"
             }
