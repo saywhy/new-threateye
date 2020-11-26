@@ -1014,26 +1014,46 @@ export default {
 
     //列拖拽
     columnDrop () {
-      const wrapperTr = document.querySelector('.common-table_alert tr');
-      this.sortable = Sortable.create(wrapperTr, {
-        only: '.table_wrap',
-        animation: 180,
-        preventOnFilter:true,
-        delay: 0,
-        onEnd: evt => {
-          let newIndex = evt.newIndex - 2;
-          let oldIndex = evt.oldIndex - 2;
-          const oldItem = this.dropCol[oldIndex];
-          this.dropCol.splice(oldIndex, 1);
-          this.dropCol.splice(newIndex, 0, oldItem);
+      if(this.sortable){
+        this.sortable.destroy();
+        const wrapperTr = document.querySelector('.common-table_alert tr');
+        this.sortable = Sortable.create(wrapperTr, {
+          only: '.table_wrap',
+          animation: 180,
+          preventOnFilter:true,
+          delay: 0,
+          onEnd: evt => {
+            let newIndex = evt.newIndex - 2;
+            let oldIndex = evt.oldIndex - 2;
+            const oldItem = this.dropCol[oldIndex];
+            this.dropCol.splice(oldIndex, 1);
+            this.dropCol.splice(newIndex, 0, oldItem);
 
-          this.label_submit_click();
+            this.label_submit_click();
 
-          this.randomKey += 1;
+            this.randomKey += 1;
+          }
+        });
+      }else {
+        const wrapperTr = document.querySelector('.common-table_alert tr');
+        this.sortable = Sortable.create(wrapperTr, {
+          only: '.table_wrap',
+          animation: 180,
+          preventOnFilter:true,
+          delay: 0,
+          onEnd: evt => {
+            let newIndex = evt.newIndex - 2;
+            let oldIndex = evt.oldIndex - 2;
+            const oldItem = this.dropCol[oldIndex];
+            this.dropCol.splice(oldIndex, 1);
+            this.dropCol.splice(newIndex, 0, oldItem);
 
-         // this.sortable.destroy();
-        }
-      });
+            this.label_submit_click();
+
+            this.randomKey += 1;
+          }
+        });
+      }
     },
 
     //配置到取消
@@ -1238,25 +1258,10 @@ export default {
       this.detail_click_val = {}
     },
     headerDragend(evt){
-      console.log('headerDragend')
-      //this.randomKey += 1;
-      if(this.sortable){
-        //this.sortable.destroy()
-
-        //console.log(this.sortable)
-
-       // this.sortable = null;
-      }
-
-      setTimeout(() => {
-        console.log('444')
-        this.columnDrop();
-
-      },500)
+      this.columnDrop ();
     },
     //列排序
     header_cell (val) {
-
       if(val.prop == 'updated_at'){
         this.params.sort = 'updated_at';
       }else if(val.prop == 'degree'){

@@ -207,7 +207,7 @@
             </el-row>
           </el-form>
 
-          <el-row class="common-table-pattern">
+          <el-row class="common-table-pattern table_wrap">
             <el-col :span="24">
               <el-table ref="multipleTable"
                         align="center"
@@ -222,6 +222,7 @@
                         @selection-change="handleSelChange"
                         @header-click="header_click"
                         @sort-change="header_cell"
+                        @header-dragend="headerDragend"
                         row-key="id"
                         :key="randomKey"
                         @row-click="detail_click">
@@ -959,23 +960,47 @@ export default {
 
     //列拖拽
     columnDrop () {
-      const wrapperTr = document.querySelector('.common-table_alert tr');
-      this.sortable = Sortable.create(wrapperTr, {
-        handle: '.common-table_alert',
-        animation: 180,
-        delay: 0,
-        onEnd: evt => {
-          let newIndex = evt.newIndex - 2;
-          let oldIndex = evt.oldIndex - 2;
-          const oldItem = this.dropCol[oldIndex];
-          this.dropCol.splice(oldIndex, 1);
-          this.dropCol.splice(newIndex, 0, oldItem);
+      if(this.sortable){
+        this.sortable.destroy();
+        const wrapperTr = document.querySelector('.common-table_alert tr');
+        this.sortable = Sortable.create(wrapperTr, {
+          only: '.table_wrap',
+          animation: 180,
+          preventOnFilter:true,
+          delay: 0,
+          onEnd: evt => {
+            let newIndex = evt.newIndex - 2;
+            let oldIndex = evt.oldIndex - 2;
+            const oldItem = this.dropCol[oldIndex];
+            this.dropCol.splice(oldIndex, 1);
+            this.dropCol.splice(newIndex, 0, oldItem);
 
-          this.label_submit_click();
+            this.label_submit_click();
 
-          this.randomKey += 1;
-        }
-      });
+            this.randomKey += 1;
+          }
+        });
+      }else {
+        const wrapperTr = document.querySelector('.common-table_alert tr');
+        this.sortable = Sortable.create(wrapperTr, {
+          only: '.table_wrap',
+          animation: 180,
+          preventOnFilter:true,
+          delay: 0,
+          onEnd: evt => {
+            let newIndex = evt.newIndex - 2;
+            let oldIndex = evt.oldIndex - 2;
+            const oldItem = this.dropCol[oldIndex];
+            this.dropCol.splice(oldIndex, 1);
+            this.dropCol.splice(newIndex, 0, oldItem);
+
+            this.label_submit_click();
+
+            this.randomKey += 1;
+          }
+        });
+      }
+
     },
 
     //配置到取消
@@ -1174,6 +1199,9 @@ export default {
         this.params.sort = 'degree';
       }
       this.get_list_threat();
+    },
+    headerDragend(evt){
+      this.columnDrop ();
     },
     mousedown (event) {
       this.oldPositon = {
