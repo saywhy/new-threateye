@@ -1980,7 +1980,8 @@ export default {
 
             //判断多选是否勾选
             if(checked_all_attr.length ==
-              this.edit.asset_list.data.length){
+              this.edit.asset_list.data.length &&
+              this.edit.asset_list.data.length > 0){
               this.edit.checked_all = true;
             }else {
               this.edit.checked_all = false;

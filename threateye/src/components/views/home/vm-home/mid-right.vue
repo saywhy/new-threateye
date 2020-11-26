@@ -35,9 +35,11 @@ export default {
 
       let type = this.threat_type.type;
       let num = this.threat_type.num;
+      if (num.length && num.length > 0){
+        num = num.reverse();
+      }
 
-      let maxNum = Math.max(...num);
-
+      //let maxNum = Math.max(...num);
       // 基于准备好的dom，初始化echarts实例
       let myChart = this.$echarts.init(document.getElementById("edr"));
       // 绘制图表
@@ -60,7 +62,7 @@ export default {
         grid: {
           top: 0,
           left: 0,
-          right: '4%',
+          right: '6%',
           bottom: '1%',
           containLabel: true
         },

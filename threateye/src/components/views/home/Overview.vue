@@ -122,7 +122,7 @@
           <div class="top_item">
             <div class="title">
               <p>
-                <span class="title_left">威胁类型</span>
+                <span class="title_left">Top5威胁类型</span>
               </p>
             </div>
             <div class="bom_right_content">
