@@ -285,7 +285,9 @@
                 <div class="title_net">下载</div>
                 <div class="value_net">
                   <img src="@/assets/images/common/download.png"
-                   class="img_icon" alt="" @click.stop='download_network()'>
+                       class="img_icon"
+                       alt=""
+                       @click.stop='download_network()'>
                 </div>
               </div>
             </div>
@@ -949,17 +951,17 @@ export default {
     return {
       dropCol: [],
       fieldList: [{ checked: true, disabled: true, name: "告警时间", alias: 'alert_time' },
-        { checked: true, disabled: true, name: "告警类型", alias: 'category' },
-        { checked: true, disabled: true, name: "源地址", alias: 'src_ip' },
-        { checked: true, disabled: true, name: "目的地址", alias: 'dest_ip' },
-        { checked: true, disabled: false, name: "威胁指标", alias: 'indicator' },
-        { checked: true, disabled: false, name: "应用", alias: 'application' },
-        { checked: true, disabled: false, name: "威胁等级", alias: 'degree' },
-        { checked: true, disabled: false, name: "失陷确定性", alias: 'fall_certainty' },
-        { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
-        { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
-        { checked: false, disabled: false, name: "标签", alias: 'labels' },
-        { checked: true, disabled: false, name: "状态", alias: 'status' }],
+      { checked: true, disabled: true, name: "告警类型", alias: 'category' },
+      { checked: true, disabled: true, name: "源地址", alias: 'src_ip' },
+      { checked: true, disabled: true, name: "目的地址", alias: 'dest_ip' },
+      { checked: true, disabled: false, name: "威胁指标", alias: 'indicator' },
+      { checked: true, disabled: false, name: "应用", alias: 'application' },
+      { checked: true, disabled: false, name: "威胁等级", alias: 'degree' },
+      { checked: true, disabled: false, name: "失陷确定性", alias: 'fall_certainty' },
+      { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
+      { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
+      { checked: false, disabled: false, name: "标签", alias: 'labels' },
+      { checked: true, disabled: false, name: "状态", alias: 'status' }],
       loading: false,
       network_work_order: {
         work_name: '',
@@ -1495,7 +1497,7 @@ export default {
         multiple: [],
         old_as: [],
       },
-      network_event:{}
+      network_event: {}
     };
   },
   components: {
@@ -1771,7 +1773,7 @@ export default {
     // 获取数据
     get_data () {
       this.loading = true
-     // console.log(this.$route.query.detail);
+      // console.log(this.$route.query.detail);
       var url = ''
       // horizontalthreat  横向威胁告警  lateral
       // externalthreat  外部威胁告警  outside
@@ -1852,9 +1854,9 @@ export default {
             }
           })
             .then(response => {
-             // console.log(response.data);
+              // console.log(response.data);
               this.$nextTick(() => {
-              //  console.log(response.data);
+                //  console.log(response.data);
                 this.network_work_order.workorder_id = response.data.data.workorder_id
                 if (response.data.data.workorder_id == '0') {
                   this.network_work_order.work_order_status = '未关联工单'
@@ -1902,7 +1904,7 @@ export default {
           // console.log(this.network_times);
           // 匹配告警类型
           this.network_times.forEach(item => {
-         //   console.log(item);
+            //   console.log(item);
             if (!item.label) {
               item.label_obj = []
             } else {
@@ -2119,6 +2121,13 @@ export default {
                     value: item.alert_description.IP,
                   },
                 ];
+                if (item.alert_description.category == '恶意程序') {
+                  item.info_list.push({
+                    name: "文件下载",
+                    value: '点击下载',
+                    md5: item.alert_description.md5
+                  })
+                }
                 break;
               case 'MaliciousURL':
                 item.info_list = [
@@ -2211,6 +2220,13 @@ export default {
                     value: item.alert_description.geo,
                   },
                 ];
+                if (item.alert_description.category == '恶意程序') {
+                  item.info_list.push({
+                    name: "文件下载",
+                    value: '点击下载',
+                    md5: item.alert_description.md5
+                  })
+                }
                 break;
               case 'sdk':
                 item.info_list = [
@@ -2627,7 +2643,7 @@ export default {
             });
           });
           this.network_times_active = this.network_times[0]
-         // console.log(this.network_times_active);
+          // console.log(this.network_times_active);
           this.new_list(this.network_times_active.indicator);
           this.old_list(this.network_times_active.indicator);
           // this.network_times.push(item_obj)
@@ -2660,7 +2676,7 @@ export default {
 
     },
     // 网络事件下载
-    download_network(){
+    download_network () {
 
       console.log(this.network_event)
       var funDownload = function (content, filename) {
@@ -2808,7 +2824,7 @@ export default {
         default:
           break;
       }
-     // console.log(indicator);
+      // console.log(indicator);
 
       this.$axios.get(new_list, {
         params: {
@@ -2972,29 +2988,29 @@ export default {
           label_list.push(element.name)
         }
       });
-        var label = ''
-       // horizontalthreat  横向威胁告警  lateral
-       // externalthreat  外部威胁告警  outside
-       // outreachthreat  外联威胁告警  outreath
+      var label = ''
+      // horizontalthreat  横向威胁告警  lateral
+      // externalthreat  外部威胁告警  outside
+      // outreachthreat  外联威胁告警  outreath
       switch (this.$route.query.type) {
-         case 'alert':
-           label = '/yiiapi/alert/label-edit'
-           break;
-         case 'asset':
-           label = '/yiiapi/asset/label-edit'
-           break;
-         case 'lateral':
-           label = '/yiiapi/horizontalthreat/label-edit'
-           break;
-         case 'outside':
-           label = '/yiiapi/externalthreat/label-edit'
-           break;
-         case 'outreath':
-           label = '/yiiapi/outreachthreat/label-edit'
-           break;
-         default:
-           break;
-       }
+        case 'alert':
+          label = '/yiiapi/alert/label-edit'
+          break;
+        case 'asset':
+          label = '/yiiapi/asset/label-edit'
+          break;
+        case 'lateral':
+          label = '/yiiapi/horizontalthreat/label-edit'
+          break;
+        case 'outside':
+          label = '/yiiapi/externalthreat/label-edit'
+          break;
+        case 'outreath':
+          label = '/yiiapi/outreachthreat/label-edit'
+          break;
+        default:
+          break;
+      }
 
       /* this.$axios.put(label, {
          id: this.$route.query.detail,
@@ -3002,7 +3018,7 @@ export default {
        })*/
 
       //ycl 2020/11/04
-     // var label = '/yiiapi/site/label-edit';
+      // var label = '/yiiapi/site/label-edit';
 
       this.$axios.put(label, {
         id: this.$route.query.detail,
@@ -3224,13 +3240,13 @@ export default {
 
       //2020/11/11
       var alarm_merger = this.network_times_active.alarm_merger;
-      if(alarm_merger){
+      if (alarm_merger) {
         this.network_event = alarm_merger[0].network_event;
-      }else{
+      } else {
         this.network_event = this.network_times_active.network_event;
       }
 
-    //console.info(this.network_event)
+      //console.info(this.network_event)
       //2020/11/11
       this.new_list(this.network_times_active.indicator);
       this.old_list(this.network_times_active.indicator);
@@ -3248,7 +3264,7 @@ export default {
     },
     handleSelectionChange () { },
     handleClick (tab, event) {
-     // console.log(tab);
+      // console.log(tab);
     },
     //工单任务选择
     change_task (command) {
@@ -4471,7 +4487,7 @@ export default {
               color: #666;
               text-align: left;
               padding: 10px;
-              .img_icon{
+              .img_icon {
                 margin: 0 8px;
                 cursor: pointer;
               }
