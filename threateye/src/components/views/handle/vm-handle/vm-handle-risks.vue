@@ -960,49 +960,28 @@ export default {
 
     //列拖拽
     columnDrop () {
-      if(this.sortable){
+      if(this.sortable) {
         this.sortable.destroy();
-        const wrapperTr = document.querySelector('.common-table_alert tr');
-        this.sortable = Sortable.create(wrapperTr, {
-          only: '.table_wrap',
-          animation: 180,
-          preventOnFilter:true,
-          delay: 0,
-          onEnd: evt => {
-            let newIndex = evt.newIndex - 2;
-            let oldIndex = evt.oldIndex - 2;
-            const oldItem = this.dropCol[oldIndex];
-            this.dropCol.splice(oldIndex, 1);
-            this.dropCol.splice(newIndex, 0, oldItem);
-
-            this.label_submit_click();
-
-            this.randomKey += 1;
-          }
-        });
-      }else {
-        const wrapperTr = document.querySelector('.common-table_alert tr');
-        this.sortable = Sortable.create(wrapperTr, {
-          only: '.table_wrap',
-          animation: 180,
-          preventOnFilter:true,
-          delay: 0,
-          onEnd: evt => {
-            let newIndex = evt.newIndex - 2;
-            let oldIndex = evt.oldIndex - 2;
-            const oldItem = this.dropCol[oldIndex];
-            this.dropCol.splice(oldIndex, 1);
-            this.dropCol.splice(newIndex, 0, oldItem);
-
-            this.label_submit_click();
-
-            this.randomKey += 1;
-          }
-        });
       }
+      const wrapperTr = document.querySelector('.common-table_alert tr');
+      this.sortable = Sortable.create(wrapperTr, {
+        only: '.table_wrap',
+        animation: 180,
+        preventOnFilter:true,
+        delay: 0,
+        onEnd: evt => {
+          let newIndex = evt.newIndex - 2;
+          let oldIndex = evt.oldIndex - 2;
+          const oldItem = this.dropCol[oldIndex];
+          this.dropCol.splice(oldIndex, 1);
+          this.dropCol.splice(newIndex, 0, oldItem);
 
+          this.label_submit_click();
+
+          this.randomKey += 1;
+        }
+      });
     },
-
     //配置到取消
     label_cancel_Click () {
       this.$refs.messageDrop.hide();
