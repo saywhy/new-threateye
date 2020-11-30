@@ -2360,6 +2360,18 @@ export default {
               default:
                 break;
             }
+            var srcIP = ''
+            var desIP = ''
+            if (item.network_event.src_port == 0) {
+              srcIP = item.network_event.src_ip
+            } else {
+              srcIP = item.network_event.src_ip + ':' + item.network_event.src_port
+            }
+            if (item.network_event.dest_port == 0) {
+              desIP = item.network_event.dest_ip
+            } else {
+              desIP = item.network_event.dest_ip + ':' + item.network_event.dest_port
+            }
             // 网络事件匹配
             switch (item.network_event.event_type) {
               case 'fileinfo':
@@ -2372,8 +2384,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Mail_from', value: item.network_event.email.from },
                       { name: 'Recpt_to', value: item.network_event.email_to },
                       { name: 'Traffic', value: 'smtp' },
@@ -2382,8 +2394,8 @@ export default {
                   case 'http':
                     item.event_list = [
                       { name: 'Method', value: item.network_event.http.http_method },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'URL', value: item.network_event.http.url },
                       { name: 'User Agent', value: item.network_event.http.http_user_agent },
                       { name: 'Referrer', value: item.network_event.http.http_refer },
@@ -2393,8 +2405,8 @@ export default {
                   case 'ftp-data':
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'User', value: '-' },
                       { name: 'Traffic', value: 'FTP' },
                     ]
@@ -2407,8 +2419,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Mail_from', value: item.network_event.email.from },
                       { name: 'Recpt_to', value: item.network_event.email_to },
                       { name: 'Traffic', value: 'imap' },
@@ -2422,8 +2434,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Mail_from', value: item.network_event.email.from },
                       { name: 'Recpt_to', value: item.network_event.email_to },
                       { name: 'Traffic', value: 'pop3' },
@@ -2432,8 +2444,8 @@ export default {
                   case 'smb':
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Domain', value: '-' },
                       { name: 'User', value: '-' },
                       { name: 'Traffic', value: 'smb' },
@@ -2447,8 +2459,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Traffic', value: item.network_event.app_proto },
                     ]
                     break;
@@ -2459,8 +2471,8 @@ export default {
                   case 'ftp':
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'User', value: item.network_event.user },
                       { name: 'Traffic', value: item.network_event.app_proto },
                     ]
@@ -2473,8 +2485,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Traffic', value: item.network_event.app_proto },
                     ]
                     break;
@@ -2483,8 +2495,8 @@ export default {
               case 'smb':
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'Domain', value: '-' },
                   { name: 'User', value: '-' },
                   { name: 'Traffic', value: item.network_event.event_type },
@@ -2493,8 +2505,8 @@ export default {
               case 'ssh':
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'Tool', value: item.network_event.ssh.client.software_version },
                   { name: 'User', value: '-' },
                   { name: 'Traffic', value: item.network_event.event_type },
@@ -2508,8 +2520,8 @@ export default {
                 }
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'URL', value: item.network_event.tls.sni },
                   { name: 'Issuerdn', value: item.network_event.tls.issuerdn },
                   { name: 'Authorizing', value: item.network_event.tls.Authorizing },
@@ -2533,8 +2545,8 @@ export default {
                 }
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'SectianType', value: item.network_event.dns.rrtype },
                   { name: 'Domain', value: item.network_event.dns.rrname },
                   { name: 'TTL', value: item.network_event.dns.HostAddr },
@@ -2544,8 +2556,8 @@ export default {
               case 'krb5':
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'Msg_type', value: item.network_event.krb5.msg_type },
                   { name: 'Cname', value: item.network_event.krb5.cname },
                   { name: 'Realm', value: item.network_event.krb5.realm },
@@ -2556,8 +2568,8 @@ export default {
               case 'http':
                 item.event_list = [
                   { name: 'Method', value: item.network_event.http.http_method },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'URL', value: item.network_event.http.url },
                   { name: 'User Agent', value: item.network_event.http.http_user_agent },
                   { name: 'Referrer', value: item.network_event.http.http_refer },
@@ -2574,8 +2586,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'URL', value: item.network_event.tls.sni },
                       { name: 'Issuerdn', value: item.network_event.tls.issuerdn },
                       { name: 'Authorizing', value: item.network_event.tls.Authorizing },
@@ -2586,8 +2598,8 @@ export default {
                   case 'http':
                     item.event_list = [
                       { name: 'Method', value: item.network_event.http.http_method },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'URL', value: item.network_event.http.url },
                       { name: 'User Agent', value: item.network_event.http.http_user_agent },
                       { name: 'Referrer', value: item.network_event.http.http_refer },
@@ -2602,8 +2614,8 @@ export default {
                     }
                     item.event_list = [
                       { name: 'Time', value: item.network_event.timestamp },
-                      { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                      { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                      { name: 'Source IP', value: srcIP },
+                      { name: 'Destination IP', value: desIP },
                       { name: 'Traffic', value: item.network_event.app_proto },
                     ]
                     break;
@@ -2616,17 +2628,14 @@ export default {
                 }
                 item.event_list = [
                   { name: 'Time', value: item.network_event.timestamp },
-                  { name: 'Source IP', value: item.network_event.src_ip + ':' + item.network_event.src_port },
-                  { name: 'Destination IP', value: item.network_event.dest_ip + ':' + item.network_event.dest_port },
+                  { name: 'Source IP', value: srcIP },
+                  { name: 'Destination IP', value: desIP },
                   { name: 'Traffic', value: item.network_event.app_proto },
                 ]
                 break;
                 break;
             }
-
           });
-
-
           // 攻击阶段
           this.attack_stage_list.forEach(element => {
             element.count = 0;
