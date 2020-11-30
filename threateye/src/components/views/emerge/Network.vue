@@ -1123,7 +1123,6 @@ export default {
 
           data.map(v => {
             v.labels = v.labels.join(',');
-            v.alert_time = '999999999'
           });
 
           this.table.tableData = data;
