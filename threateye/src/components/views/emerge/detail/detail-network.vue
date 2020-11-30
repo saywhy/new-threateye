@@ -2392,13 +2392,25 @@ export default {
                     ]
                     break;
                   case 'http':
+                    var htttp_set = {
+                      http_method: '',
+                      url: '',
+                      http_user_agent: '',
+                      http_refer: '',
+                    }
+                    if (item.network_event.http) {
+                      htttp_set.http_method = item.network_event.http.http_method
+                      htttp_set.url = item.network_event.http.url
+                      htttp_set.http_user_agent = item.network_event.http.http_user_agent
+                      htttp_set.http_refer = item.network_event.http.http_refer
+                    }
                     item.event_list = [
-                      { name: 'Method', value: item.network_event.http.http_method },
+                      { name: 'Method', value: htttp_set.http_method },
                       { name: 'Source IP', value: srcIP },
                       { name: 'Destination IP', value: desIP },
-                      { name: 'URL', value: item.network_event.http.url },
-                      { name: 'User Agent', value: item.network_event.http.http_user_agent },
-                      { name: 'Referrer', value: item.network_event.http.http_refer },
+                      { name: 'URL', value: htttp_set.url },
+                      { name: 'User Agent', value: htttp_set.http_user_agent },
+                      { name: 'Referrer', value: htttp_set.http_refer },
                       { name: 'Traffic', value: 'http' },
                     ]
                     break;
@@ -2566,13 +2578,25 @@ export default {
                 ]
                 break
               case 'http':
+                var htttp_set = {
+                  http_method: '',
+                  url: '',
+                  http_user_agent: '',
+                  http_refer: '',
+                }
+                if (item.network_event.http) {
+                  htttp_set.http_method = item.network_event.http.http_method
+                  htttp_set.url = item.network_event.http.url
+                  htttp_set.http_user_agent = item.network_event.http.http_user_agent
+                  htttp_set.http_refer = item.network_event.http.http_refer
+                }
                 item.event_list = [
-                  { name: 'Method', value: item.network_event.http.http_method },
+                  { name: 'Method', value: htttp_set.http_method },
                   { name: 'Source IP', value: srcIP },
                   { name: 'Destination IP', value: desIP },
-                  { name: 'URL', value: item.network_event.http.url },
-                  { name: 'User Agent', value: item.network_event.http.http_user_agent },
-                  { name: 'Referrer', value: item.network_event.http.http_refer },
+                  { name: 'URL', value: htttp_set.url },
+                  { name: 'User Agent', value: htttp_set.http_user_agent },
+                  { name: 'Referrer', value: htttp_set.http_refer },
                   { name: 'Traffic', value: 'http' },
                 ]
                 break
@@ -2596,13 +2620,25 @@ export default {
                     ]
                     break;
                   case 'http':
+                    var htttp_set = {
+                      http_method: '',
+                      url: '',
+                      http_user_agent: '',
+                      http_refer: '',
+                    }
+                    if (item.network_event.http) {
+                      htttp_set.http_method = item.network_event.http.http_method
+                      htttp_set.url = item.network_event.http.url
+                      htttp_set.http_user_agent = item.network_event.http.http_user_agent
+                      htttp_set.http_refer = item.network_event.http.http_refer
+                    }
                     item.event_list = [
-                      { name: 'Method', value: item.network_event.http.http_method },
+                      { name: 'Method', value: htttp_set.http_method },
                       { name: 'Source IP', value: srcIP },
                       { name: 'Destination IP', value: desIP },
-                      { name: 'URL', value: item.network_event.http.url },
-                      { name: 'User Agent', value: item.network_event.http.http_user_agent },
-                      { name: 'Referrer', value: item.network_event.http.http_refer },
+                      { name: 'URL', value: htttp_set.url },
+                      { name: 'User Agent', value: htttp_set.http_user_agent },
+                      { name: 'Referrer', value: htttp_set.http_refer },
                       { name: 'Traffic', value: 'http' },
                     ]
                     break;
