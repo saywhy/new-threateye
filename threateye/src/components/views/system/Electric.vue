@@ -21,6 +21,11 @@
                        name="third">
             <router-set v-if="tab_show.third"></router-set>
           </el-tab-pane>
+          <el-tab-pane label="网络工具"
+                       class="tabs-item"
+                       name="fourth">
+            <network-tools v-if="tab_show.fourth"></network-tools>
+          </el-tab-pane>
         </el-tabs>
       </div>
     </div>
@@ -30,12 +35,14 @@
 import networkCard from "@/components/views/system/vm-electric/network-card";
 import proxyServer from "@/components/views/system/vm-electric/proxy-server";
 import routerSet from "@/components/views/system/vm-electric/router-set";
+import networkTools from "@/components/views/system/vm-electric/network-tools";
 import { eventBus } from '@/components/common/eventBus.js';
 export default {
   components: {
     networkCard,
     proxyServer,
-    routerSet
+    routerSet,
+    networkTools
   },
   name: "system_control_electric",
   data () {
@@ -61,9 +68,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -71,7 +78,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -91,16 +98,25 @@ export default {
           this.tab_show.first = true;
           this.tab_show.second = false;
           this.tab_show.third = false;
+          this.tab_show.fourth = false;
           break;
         case "second":
           this.tab_show.first = false;
           this.tab_show.second = true;
           this.tab_show.third = false;
+          this.tab_show.fourth = false;
           break;
         case "third":
           this.tab_show.first = false;
           this.tab_show.second = false;
           this.tab_show.third = true;
+          this.tab_show.fourth = false;
+          break;
+        case "fourth":
+          this.tab_show.first = false;
+          this.tab_show.second = false;
+          this.tab_show.third = false;
+          this.tab_show.fourth = true;
           break;
         default:
           break;

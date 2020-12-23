@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-      <div class="content_right content_common">
+      <div class="content_left content_common">
         <p class="title">恶意域名列表：</p>
         <p>
           <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
@@ -34,6 +34,31 @@
         <div class="list_box">
           <p class="list_title_box">
             <span>域名:</span>
+            <el-button class="btn_i"
+                       @click="add_url">添加</el-button>
+          </p>
+          <div class="item_box"
+               v-for="(item,index) in outside_list.url"
+               @mouseenter="enter_url(index)"
+               :class="item.class==''?'':item.class"
+               @mouseleave="leave_url(index)">
+            <span>{{item.addr}}</span>
+            <img class="del_img"
+                 v-if="item.icon"
+                 @click="del_list(item)"
+                 src="@/assets/images/common/del.png"
+                 alt="">
+          </div>
+        </div>
+      </div>
+      <div class="content_left content_common">
+        <p class="title">恶意哈希列表：</p>
+        <p>
+          <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
+        </p>
+        <div class="list_box">
+          <p class="list_title_box">
+            <span>哈希:</span>
             <el-button class="btn_i"
                        @click="add_url">添加</el-button>
           </p>
@@ -168,9 +193,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -178,7 +203,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -398,7 +423,7 @@ export default {
     margin-top: 12px;
     display: flex;
     .content_common {
-      width: 560px;
+      flex: 1;
       word-break: break-all;
       white-space: pre-wrap;
       word-wrap: break-word;

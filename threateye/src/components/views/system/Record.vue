@@ -15,6 +15,11 @@
                      name="second">
           <syslog-set v-if="tab_show.second"></syslog-set>
         </el-tab-pane>
+        <el-tab-pane label="SNMP配置"
+                     class="tabs-item"
+                     name="fourth">
+          <snmp-set v-if="tab_show.fourth"></snmp-set>
+        </el-tab-pane>
         <el-tab-pane label="故障日志"
                      class="tabs-item"
                      name="third">
@@ -28,12 +33,14 @@
 import auditLog from "@/components/views/system/vm-record/audit-log";
 import faultLog from "@/components/views/system/vm-record/fault-log";
 import syslogSet from "@/components/views/system/vm-record/syslog-set";
+import snmpSet from "@/components/views/system/vm-record/snmp-set";
 import { eventBus } from '@/components/common/eventBus.js';
 export default {
   components: {
     auditLog,
     faultLog,
-    syslogSet
+    syslogSet,
+    snmpSet
   },
   name: "system_control_record",
   data () {
@@ -43,6 +50,7 @@ export default {
         first: true,
         second: false,
         third: false,
+        fourth: false,
       }
     };
   },
@@ -59,9 +67,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -69,7 +77,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -89,16 +97,25 @@ export default {
           this.tab_show.first = true;
           this.tab_show.second = false;
           this.tab_show.third = false;
+          this.tab_show.fourth = false;
           break;
         case "second":
           this.tab_show.first = false;
           this.tab_show.second = true;
           this.tab_show.third = false;
+          this.tab_show.fourth = false;
           break;
         case "third":
           this.tab_show.first = false;
           this.tab_show.second = false;
           this.tab_show.third = true;
+          this.tab_show.fourth = false;
+          break;
+        case "fourth":
+          this.tab_show.first = false;
+          this.tab_show.second = false;
+          this.tab_show.third = false;
+          this.tab_show.fourth = true;
           break;
         default:
           break;

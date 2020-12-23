@@ -113,9 +113,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -123,7 +123,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],

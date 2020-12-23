@@ -9,6 +9,9 @@
       <p class="title marin_top">重启平台</p>
       <el-button class="btn_i"
                  @click="reboot">立即重启</el-button>
+      <p class="title marin_top">设备关机</p>
+      <el-button class="btn_i"
+                 @click="closed">设备关机</el-button>
     </div>
   </div>
 </template>
@@ -35,9 +38,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -45,7 +48,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -136,6 +139,38 @@ export default {
         });
       });
     },
+    closed () {
+      this.$confirm('此操作将设备关机, 是否继续?', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        // this.loading = true
+        // this.$axios.put('/yiiapi/seting/reboot')
+        //   .then(response => {
+        //     this.loading = false
+        //     let { status, data } = response.data;
+        //     if (status == 0) {
+        //       this.$message(
+        //         {
+        //           message: '执行设备关机成功',
+        //           type: 'success',
+        //         }
+        //       );
+        //       location.reload();
+        //       this.$router.push('/login');
+        //     }
+        //   })
+        //   .catch(error => {
+        //     console.log(error);
+        //   })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消操作'
+        });
+      });
+    }
   }
 }
 </script>

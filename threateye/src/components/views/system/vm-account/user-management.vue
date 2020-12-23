@@ -169,6 +169,7 @@
         <div class="content_item">
           <p>
             <span class="title">角色</span>
+            <span class="red">*</span>
           </p>
           <el-select class="select_box"
                      v-model="user_add.role"
@@ -257,6 +258,7 @@
         <div class="content_item">
           <p>
             <span class="title">角色</span>
+            <span class="red">*</span>
           </p>
           <el-select class="select_box"
                      v-model="user_edit.role"
@@ -348,9 +350,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -358,7 +360,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -513,6 +515,54 @@ export default {
         );
         return false
       }
+
+      if (this.user_add.email_addr == '') {
+        this.$message(
+          {
+            message: '请输入邮箱',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if (!email_reg.test(this.user_add.email_addr)) {
+        this.$message(
+          {
+            message: '邮箱格式错误',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      if (this.user_add.mobile == '') {
+        this.$message(
+          {
+            message: '请输入手机号',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+      if (!myreg.test(this.user_add.mobile)) {
+        this.$message(
+          {
+            message: '手机号格式错误',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      if (this.user_add.role == '') {
+        this.$message(
+          {
+            message: '请选择角色',
+            type: 'warning',
+          }
+        );
+        return false
+      }
       this.$axios.post('/yiiapi/user/user-add', {
         username: this.user_add.username,
         password: this.user_add.password,
@@ -588,6 +638,53 @@ export default {
         this.$message(
           {
             message: '密码必须同时包含大写、小写、数字和特殊字符其中三项',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      if (this.user_edit.email_addr == '') {
+        this.$message(
+          {
+            message: '请输入邮箱',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      var email_reg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+      if (!email_reg.test(this.user_edit.email_addr)) {
+        this.$message(
+          {
+            message: '邮箱格式错误',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      if (this.user_edit.mobile == '') {
+        this.$message(
+          {
+            message: '请输入手机号',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      var myreg = /^[1][3,4,5,7,8,9][0-9]{9}$/;
+      if (!myreg.test(this.user_edit.mobile)) {
+        this.$message(
+          {
+            message: '手机号格式错误',
+            type: 'warning',
+          }
+        );
+        return false
+      }
+      if (this.user_edit.role == '') {
+        this.$message(
+          {
+            message: '请选择角色',
             type: 'warning',
           }
         );

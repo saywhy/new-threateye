@@ -131,6 +131,10 @@ export default {
   mounted () {
     this.test()
     this.check_passwd();
+    if (this.$route.query.sha256 && this.$route.query.sha256 != '') {
+      this.file_search.md5 = this.$route.query.sha256;
+      this.get_data();
+    }
   },
   methods: {
     // 测试600专用
@@ -156,9 +160,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -166,7 +170,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],

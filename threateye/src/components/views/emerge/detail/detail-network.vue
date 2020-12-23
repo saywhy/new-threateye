@@ -130,6 +130,10 @@
               <span class="item_li_content">{{network_times_active.alert_time}}</span>
             </li>
             <li class="item_li">
+              <span class="item_li_title">更新时间:</span>
+              <span class="item_li_content">{{network_times_active.detect_engine}}</span>
+            </li>
+            <li class="item_li">
               <span class="item_li_title">威胁指标:</span>
               <span class="item_li_content">{{network_times_active.indicator}}</span>
             </li>
@@ -157,6 +161,11 @@
               <span class="item_li_title">失陷确定性:</span>
               <span :class="network_times_active.fall_certainty == '0'?'':'fall_certainty'">
                 {{network_times_active.fall_certainty == '0'?'':'已失陷'}}</span>
+            </li>
+
+            <li class="item_li">
+              <span class="item_li_title">告警次数:</span>
+              <span class="item_li_content">{{network_times_active.detect_engine}}</span>
             </li>
             <li class="item_li">
               <span class="item_li_title">标签:</span>
@@ -231,15 +240,38 @@
                     v-for="value in item.info_list"
                     v-if="value.name !='文件行为'&&value.name !='taskID'">
                   <span class="info_top_item_title">{{value.name}}</span>
-                  <span v-if="value.name=='文件大小'">
+                  <span v-if="value.name=='文件大小'&&value.name!='SHA256'">
                     {{value.value | filterType }}
                   </span>
                   <span class="info_top_item_content"
-                        v-if="value.name!='文件大小'"
+                        v-if="value.name!='文件大小'&&value.name!='SHA256'"
                         :class="value.value=='点击下载'?'download_text':''">
                     <span @click="download(value,item)">{{value.value}}</span>
                   </span>
+
+                  <span class="info_top_item_content"
+                        v-if="value.name=='SHA256'">
+                    <el-dropdown @command="change_sha256"
+                                 trigger="click"
+                                 class="src_dropdown_box"
+                                 placement='bottom-start'
+                                 size='148'>
+                      <el-button class="change_src_btn">
+                        <span>{{value.value}}</span>
+                        <i class="el-icon-arrow-down el-icon--right"></i>
+                      </el-button>
+                      <el-dropdown-menu slot="dropdown"
+                                        style="width:200px;"
+                                        class="dropdown_ul_box_detail">
+                        <el-dropdown-item command='1'
+                                          class="select_item">威胁追查</el-dropdown-item>
+                        <el-dropdown-item command="2"
+                                          class="select_item">添加到外部动态列表</el-dropdown-item>
+                      </el-dropdown-menu>
+                    </el-dropdown>
+                  </span>
                 </li>
+
                 <!-- 沙箱检测下载 -->
                 <li class="info_top_item"
                     v-for="value in item.info_list"
@@ -2243,8 +2275,13 @@ export default {
                     value: item.alert_description.file_size
                   },
                   {
-                    name: '文件哈希值',
+                    // name: '文件哈希值',
+                    name: 'MD5',
                     value: item.alert_description.md5
+                  },
+                  {
+                    name: 'SHA256',
+                    value: item.alert_description.sha256
                   },
                   {
                     name: 'SDK检测威胁',
@@ -2325,8 +2362,13 @@ export default {
                     value: item.alert_description.file_size,
                   },
                   {
-                    name: "文件哈希值",
+                    // name: "文件哈希值",
+                    name: 'MD5',
                     value: item.alert_description.md5,
+                  },
+                  {
+                    name: 'SHA256',
+                    value: item.alert_description.sha256
                   },
                   {
                     name: "Yara规则名称",
@@ -2362,12 +2404,12 @@ export default {
             }
             var srcIP = ''
             var desIP = ''
-            if (item.network_event.src_port == 0) {
+            if (!item.network_event.src_port) {
               srcIP = item.network_event.src_ip
             } else {
               srcIP = item.network_event.src_ip + ':' + item.network_event.src_port
             }
-            if (item.network_event.dest_port == 0) {
+            if (!item.network_event.dest_port) {
               desIP = item.network_event.dest_ip
             } else {
               desIP = item.network_event.dest_ip + ':' + item.network_event.dest_port
@@ -3183,14 +3225,24 @@ export default {
         });
       }
     },
+    change_sha256 (item) {
+      console.log(item);
+      console.log(this.network_times_active);
+      // this.network_times_active
+      let sha256 = this.network_times_active.info_list.filter((item, index) => {
+        return item.name == 'SHA256'
+      })
+      console.log(sha256[0].value);
+      if (item == '1') {
+        this.$router.push({ path: "/invest/file", query: { sha256: sha256[0].value } });
+      }
+
+    },
 
     // 加入外部链接
     change_state_dest (item) {
       //console.log(item);
       if (item == '1') {
-
-
-
         this.$router.push({ path: "/invest/url", query: { dest_ip: this.network_detail.dest_ip, src_ip: '' } });
       }
       //加入外部链接
@@ -3201,7 +3253,6 @@ export default {
           type: 'warning'
         }).then(() => {
           var join = ''
-
           // horizontalthreat  横向威胁告警  lateral
           // externalthreat  外部威胁告警  outside
           // outreachthreat  外联威胁告警  outreath
@@ -3262,18 +3313,18 @@ export default {
     },
 
     time_active (index) {
+      console.log(index);
+
       this.time_choose = index;
+      console.log(this.network_times);
       this.network_times_active = this.network_times[index]
       console.log(this.network_times_active);
-
       //2020/11/11
-      var alarm_merger = this.network_times_active.alarm_merger;
-      if (alarm_merger) {
-        this.network_event = alarm_merger[0].network_event;
-      } else {
+      if (this.network_times_active.network_event) {
         this.network_event = this.network_times_active.network_event;
+      } else {
+        this.network_event = {};
       }
-
       //console.info(this.network_event)
       //2020/11/11
       this.new_list(this.network_times_active.indicator);
@@ -3715,6 +3766,14 @@ export default {
 .el-input__inner {
   background: #f8f8f8;
   border: 0;
+}
+.src_dropdown_box {
+  border: none;
+}
+.change_src_btn {
+  background: none;
+  border: none;
+  padding: 0;
 }
 .dropdown_ul_box_detail {
   // width: 124px;

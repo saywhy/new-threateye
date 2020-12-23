@@ -9,6 +9,9 @@
       <span class="item_time">上次更新时间：
         <span>{{item.time}}</span>
       </span>
+      <span class="item_time">上次成功时间：
+        <span>{{item.time}}</span>
+      </span>
       <span class="item_status">{{item.status_cn}}</span>
     </p>
     <el-button type="primary"
@@ -20,6 +23,9 @@
        v-if="item.update_type=='2'">
       <span class="item_name">{{item.key}}</span>
       <span class="item_time">上次更新时间：
+        <span>{{item.time}}</span>
+      </span>
+      <span class="item_time">上次成功时间：
         <span>{{item.time}}</span>
       </span>
       <span class="item_status">{{item.status_cn}}</span>
@@ -152,9 +158,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -162,7 +168,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],

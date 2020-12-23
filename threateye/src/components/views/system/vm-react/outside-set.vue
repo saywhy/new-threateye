@@ -16,8 +16,14 @@
             <span>{{hostip}}/MaliciousIP?uname=账号&passwd=密码</span>
           </p>
         </div>
-        <div class="list_right">
+        <div class="list_left">
           <p class="item_title">恶意域名列表</p>
+          <p class="item_content">
+            <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
+          </p>
+        </div>
+        <div class="list_right">
+          <p class="item_title">恶意哈希列表URL</p>
           <p class="item_content">
             <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
           </p>
@@ -218,9 +224,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -228,7 +234,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -572,7 +578,8 @@ export default {
       }
       .list_left {
         // width: 320px;
-        margin-right: 36px;
+        flex: 1;
+        margin-right: 24px;
         background: #f8f8f8;
         word-break: break-all;
         white-space: pre-wrap;
@@ -581,6 +588,8 @@ export default {
       }
       .list_right {
         // width: 720px;
+        flex: 1;
+        margin-right: 24px;
         padding-bottom: 16px;
         background: #f8f8f8;
         word-break: break-all;

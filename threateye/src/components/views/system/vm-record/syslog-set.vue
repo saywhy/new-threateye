@@ -250,9 +250,9 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
+          if (status != 0) {
+            for (let key in msg) {
+              if (key == 600) {
                 this.$message(
                   {
                     message: msg[key],
@@ -260,7 +260,7 @@ export default {
                   }
                 );
               }
-              if(key == 602){
+              if (key == 602) {
                 this.$message(
                   {
                     message: msg[key],
@@ -440,7 +440,7 @@ export default {
     margin-bottom: 24px;
     .btn_i {
       padding: 0;
-      width: 177px;
+      width: 180px;
       height: 42px;
       background: #0070ff;
       color: #fff;
