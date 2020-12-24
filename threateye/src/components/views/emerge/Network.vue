@@ -12,7 +12,8 @@
     <div class="alert_risk">
       <el-form class="common-pattern">
         <h3 class="title">告警监测</h3>
-        <el-row class="common_box" style="padding: 15px 0;">
+        <el-row class="common_box"
+                style="padding: 15px 0;">
           <!--<el-col :span="24"
                   class="common_box_list">
             &lt;!&ndash;搜索关键词&ndash;&gt;
@@ -70,7 +71,8 @@
                        @click="export_box">导出</el-button>
           </el-col>-->
           <!--1-->
-          <el-col :span="24" class="common_box_list">
+          <el-col :span="24"
+                  class="common_box_list">
 
             <!--告警类型-->
             <el-input class="s_key1"
@@ -133,7 +135,8 @@
             </el-select>
           </el-col>
           <!--2-->
-          <el-col :span="24" class="common_box_list common_box_list_network">
+          <el-col :span="24"
+                  class="common_box_list common_box_list_network">
 
             <!--源地址-->
             <el-input class="s_key1"
@@ -174,7 +177,8 @@
           </el-col>
         </el-row>
         <!--按钮组-->
-        <el-row class="common_btn" style="width: 100%;">
+        <el-row class="common_btn"
+                style="width: 100%;">
           <el-col :span="24"
                   class="common_btn_list">
             <el-dropdown @command="change_state"
@@ -212,7 +216,6 @@
                 <el-dropdown-item command="添加到工单">添加到工单</el-dropdown-item>
               </el-dropdown-menu>
             </el-dropdown>
-
 
             <!--配置列-->
             <el-dropdown class="e_deplay"
@@ -711,25 +714,25 @@ export default {
       dropCol: [],
       fieldFlag: false,
       fieldList: [{ checked: true, disabled: true, name: "告警时间", alias: 'alert_time' },
-        { checked: true, disabled: true, name: "告警类型", alias: 'category' },
-        { checked: true, disabled: true, name: "源地址", alias: 'src_ip' },
-        { checked: true, disabled: true, name: "目的地址", alias: 'dest_ip' },
-        { checked: true, disabled: false, name: "威胁指标", alias: 'indicator' },
-        { checked: true, disabled: false, name: "应用", alias: 'application' },
-        { checked: true, disabled: false, name: "威胁等级", alias: 'degree' },
-        { checked: true, disabled: false, name: "失陷确定性", alias: 'fall_certainty' },
-        { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
-        { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
-        { checked: false, disabled: false, name: "标签", alias: 'labels' },
-        { checked: true, disabled: false, name: "状态", alias: 'status' }],
-      sortable:null,
+      { checked: true, disabled: true, name: "告警类型", alias: 'category' },
+      { checked: true, disabled: true, name: "源地址", alias: 'src_ip' },
+      { checked: true, disabled: true, name: "目的地址", alias: 'dest_ip' },
+      { checked: true, disabled: false, name: "威胁指标", alias: 'indicator' },
+      { checked: true, disabled: false, name: "应用", alias: 'application' },
+      { checked: true, disabled: false, name: "威胁等级", alias: 'degree' },
+      { checked: true, disabled: false, name: "失陷确定性", alias: 'fall_certainty' },
+      { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
+      { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
+      { checked: false, disabled: false, name: "标签", alias: 'labels' },
+      { checked: true, disabled: false, name: "状态", alias: 'status' }],
+      sortable: null,
       echarts_data: {},
       e_line: {
         loading: true,
         data_show: false,
       },
-      old_params:{
-        category:'',
+      old_params: {
+        category: '',
         indicator: '',
         start_time: '',
         end_time: '',
@@ -739,7 +742,7 @@ export default {
         src_ip: '',
         dest_ip: '',
         update_stime: '',
-        update_etime:'',
+        update_etime: '',
         label: ''
       },
       params: {
@@ -748,14 +751,14 @@ export default {
         degree: '',
         start_time: '',
         end_time: '',
-        category:'',
+        category: '',
         indicator: '',
         src_ip: '',
         dest_ip: '',
         update_stime: '',
-        update_etime:'',
+        update_etime: '',
         label: '',
-        sort:'degree'
+        sort: 'degree'
       },
       options_degree: [
         {
@@ -943,6 +946,14 @@ export default {
             );
             eventBus.$emit('reset')
           }
+          if (status == '600') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+          }
         })
     },
 
@@ -977,7 +988,7 @@ export default {
           if (status == 0) {
             let config = data.config.fields;
 
-           // console.log(config)
+            // console.log(config)
             for (var key of config) {
 
               this.fieldList.forEach(item => {
@@ -1014,14 +1025,14 @@ export default {
 
     //列拖拽
     columnDrop () {
-      if(this.sortable) {
+      if (this.sortable) {
         this.sortable.destroy();
       }
       const wrapperTr = document.querySelector('.common-table_alert tr');
       this.sortable = Sortable.create(wrapperTr, {
         only: '.table_wrap',
         animation: 180,
-        preventOnFilter:true,
+        preventOnFilter: true,
         delay: 0,
         onEnd: evt => {
           let newIndex = evt.newIndex - 2;
@@ -1075,7 +1086,7 @@ export default {
 
     //配置列弹窗关闭事件
     dropdown_hide (val) {
-      if (!val) {this.label_cancel_Click();}
+      if (!val) { this.label_cancel_Click(); }
     },
     /**
      * 2020/10/28ycl新加功能
@@ -1093,18 +1104,18 @@ export default {
 
       this.$axios.get('/yiiapi/alert/list', {
         params: {
-          category:this.old_params.category,
-          indicator:this.old_params.indicator,
+          category: this.old_params.category,
+          indicator: this.old_params.indicator,
           start_time: this.old_params.start_time,
           end_time: this.old_params.end_time,
           fall_certainty: params_alert.fall_certainty,
           status: this.old_params.status,
           degree: this.old_params.degree,
-          src_ip:this.old_params.src_ip,
-          dest_ip:this.old_params.dest_ip,
-          update_stime:this.old_params.update_stime,
-          update_etime:this.old_params.update_etime,
-          label:this.old_params.label,
+          src_ip: this.old_params.src_ip,
+          dest_ip: this.old_params.dest_ip,
+          update_stime: this.old_params.update_stime,
+          update_etime: this.old_params.update_etime,
+          label: this.old_params.label,
 
           sort: this.params.sort,
           page: this.table.pageNow,
@@ -1238,16 +1249,16 @@ export default {
     header_click (val) {
       this.detail_click_val = {}
     },
-    headerDragend(evt){
-      this.columnDrop ();
+    headerDragend (evt) {
+      this.columnDrop();
     },
     //列排序
     header_cell (val) {
-      if(val.prop == 'updated_at'){
+      if (val.prop == 'updated_at') {
         this.params.sort = 'updated_at';
-      }else if(val.prop == 'degree'){
+      } else if (val.prop == 'degree') {
         this.params.sort = 'degree';
-      }else {
+      } else {
         this.params.sort = 'degree';
       }
       this.get_list_risk();
@@ -1787,410 +1798,318 @@ export default {
 </script>
 
 <style scoped lang="less">
-  @import '../../../assets/css/less/common-pattern.less';
-  @import '../../../assets/css/less/common-table-pattern.less';
-  #Network {
-    text-align: left;
-    padding: 24px;
-    .e_line {
-      height: 322px;
-      background: #ffffff;
-      border-radius: 4px;
-      position: relative;
-      .title {
-        text-align: left;
-        font-size: 18px;
-        color: #333;
-        position: absolute;
-        top: 12px;
-        left: 24px;
-      }
-    }
-    .alert_risk {
-      border-radius: 4px;
-      margin-top: 20px;
-      padding: 20px 24px;
-      height: auto;
-      background: #fff;
+@import '../../../assets/css/less/common-pattern.less';
+@import '../../../assets/css/less/common-table-pattern.less';
+#Network {
+  text-align: left;
+  padding: 24px;
+  .e_line {
+    height: 322px;
+    background: #ffffff;
+    border-radius: 4px;
+    position: relative;
+    .title {
       text-align: left;
+      font-size: 18px;
+      color: #333;
+      position: absolute;
+      top: 12px;
+      left: 24px;
     }
+  }
+  .alert_risk {
+    border-radius: 4px;
+    margin-top: 20px;
+    padding: 20px 24px;
+    height: auto;
+    background: #fff;
+    text-align: left;
+  }
 
-    /* 弹窗 */
-    /* 状态变更 */
-    /deep/ .pop_state_box {
-      .el-dialog {
-        .el-dialog__header {
-          display: none;
+  /* 弹窗 */
+  /* 状态变更 */
+  /deep/ .pop_state_box {
+    .el-dialog {
+      .el-dialog__header {
+        display: none;
+      }
+      .el-dialog__body {
+        height: 260px;
+        padding: 30px;
+        .closed_img {
+          position: absolute;
+          top: -18px;
+          right: -18px;
+          cursor: pointer;
+          width: 46px;
+          height: 46px;
         }
-        .el-dialog__body {
-          height: 260px;
-          padding: 30px;
-          .closed_img {
-            position: absolute;
-            top: -18px;
-            right: -18px;
-            cursor: pointer;
-            width: 46px;
-            height: 46px;
-          }
-          .title {
-            height: 24px;
+        .title {
+          height: 24px;
+          line-height: 24px;
+          text-align: left;
+          .title_name {
+            font-size: 20px;
+            color: #333333;
             line-height: 24px;
-            text-align: left;
-            .title_name {
-              font-size: 20px;
-              color: #333333;
-              line-height: 24px;
-            }
-            .mask {
-              width: 24px;
-              height: 0px;
-              border-top: 0px;
-              border-right: 2px solid transparent;
-              border-bottom: 5px solid #0070ff;
-              border-left: 2px solid transparent;
-              transform: rotate3d(0, 0, 1, 90deg);
-              display: inline-block;
-              margin-right: -5px;
-              margin-bottom: 4px;
-              margin-left: -10px;
-            }
           }
-
-          .content {
-            height: 112px;
-            padding-top: 36px;
+          .mask {
+            width: 24px;
+            height: 0px;
+            border-top: 0px;
+            border-right: 2px solid transparent;
+            border-bottom: 5px solid #0070ff;
+            border-left: 2px solid transparent;
+            transform: rotate3d(0, 0, 1, 90deg);
+            display: inline-block;
+            margin-right: -5px;
+            margin-bottom: 4px;
+            margin-left: -10px;
           }
+        }
 
-          .btn_box {
+        .content {
+          height: 112px;
+          padding-top: 36px;
+        }
+
+        .btn_box {
+          height: 42px;
+          text-align: center;
+          margin-bottom: 24px;
+
+          .ok_btn {
+            width: 136px;
             height: 42px;
-            text-align: center;
-            margin-bottom: 24px;
+            background: #0070ff;
+            color: #fff;
+          }
 
-            .ok_btn {
-              width: 136px;
-              height: 42px;
-              background: #0070ff;
-              color: #fff;
-            }
-
-            .cancel_btn {
-              width: 136px;
-              height: 42px;
-              border-color: #0070ff;
-              background: #fff;
-              color: #0070ff;
-            }
+          .cancel_btn {
+            width: 136px;
+            height: 42px;
+            border-color: #0070ff;
+            background: #fff;
+            color: #0070ff;
           }
         }
       }
     }
+  }
 
-    // 编辑工单
-    /deep/ .task_new_box {
-      .el-dialog {
-        .el-dialog__header {
-          display: none;
+  // 编辑工单
+  /deep/ .task_new_box {
+    .el-dialog {
+      .el-dialog__header {
+        display: none;
+      }
+
+      .el-dialog__body {
+        padding: 30px;
+
+        .closed_img {
+          position: absolute;
+          top: -18px;
+          right: -18px;
+          cursor: pointer;
+          width: 46px;
+          height: 46px;
         }
 
-        .el-dialog__body {
-          padding: 30px;
+        .title {
+          height: 24px;
+          line-height: 24px;
+          text-align: left;
 
-          .closed_img {
-            position: absolute;
-            top: -18px;
-            right: -18px;
-            cursor: pointer;
-            width: 46px;
-            height: 46px;
-          }
-
-          .title {
-            height: 24px;
+          .title_name {
+            font-size: 20px;
+            color: #333333;
             line-height: 24px;
-            text-align: left;
-
-            .title_name {
-              font-size: 20px;
-              color: #333333;
-              line-height: 24px;
-            }
-
-            .mask {
-              width: 24px;
-              height: 0px;
-              border-top: 0px;
-              border-right: 2px solid transparent;
-              border-bottom: 5px solid #0070ff;
-              border-left: 2px solid transparent;
-              transform: rotate3d(0, 0, 1, 90deg);
-              display: inline-block;
-              margin-right: -5px;
-              margin-bottom: 4px;
-              margin-left: -10px;
-            }
           }
 
-          .step_box {
+          .mask {
+            width: 24px;
+            height: 0px;
+            border-top: 0px;
+            border-right: 2px solid transparent;
+            border-bottom: 5px solid #0070ff;
+            border-left: 2px solid transparent;
+            transform: rotate3d(0, 0, 1, 90deg);
+            display: inline-block;
+            margin-right: -5px;
+            margin-bottom: 4px;
+            margin-left: -10px;
+          }
+        }
+
+        .step_box {
+          height: 36px;
+          margin: 20px 0 24px 0;
+          .step_box1 {
+            background-image: url('../../../assets/images/emerge/step1.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            width: 120px;
             height: 36px;
-            margin: 20px 0 24px 0;
-            .step_box1 {
-              background-image: url('../../../assets/images/emerge/step1.png');
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              width: 120px;
-              height: 36px;
-              float: left;
-              position: relative;
-              line-height: 36px;
-              text-align: center;
+            float: left;
+            position: relative;
+            line-height: 36px;
+            text-align: center;
 
-              .step1_span {
-                font-size: 14px;
-              }
-
-              .selected_img {
-                position: absolute;
-                left: 0;
-                top: 0;
-              }
+            .step1_span {
+              font-size: 14px;
             }
 
-            .step_box2 {
-              width: 120px;
-              height: 36px;
-              background-image: url('../../../assets/images/emerge/step2.png');
-              background-repeat: no-repeat;
-              background-size: 100% 100%;
-              float: left;
-              position: relative;
-              line-height: 36px;
-              text-align: center;
-              margin-left: -10px;
-
-              .step2_span {
-                font-size: 14px;
-              }
-            }
-
-            .step_now {
-              color: #0070ff;
-            }
-
-            .step_past {
-              color: #999999;
+            .selected_img {
+              position: absolute;
+              left: 0;
+              top: 0;
             }
           }
 
-          .task_new_content {
-            /*height: 480px;*/
+          .step_box2 {
+            width: 120px;
+            height: 36px;
+            background-image: url('../../../assets/images/emerge/step2.png');
+            background-repeat: no-repeat;
+            background-size: 100% 100%;
+            float: left;
+            position: relative;
+            line-height: 36px;
+            text-align: center;
+            margin-left: -10px;
 
-            .task_content_box {
-              height: 400px;
-              overflow-y: auto;
-              &::-webkit-scrollbar {
-                /*滚动条整体样式*/
-                width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
-                border-radius: 6px;
-              }
-              &::-webkit-scrollbar-thumb {
-                /*滚动条里面小方块*/
-                border-radius: 6px;
-                background: #a8a8a8;
-              }
-              &::-webkit-scrollbar-track {
-                /*滚动条里面轨道*/
-                border-radius: 6px;
-                background: #f4f4f4;
-              }
-
-              .content_top {
-                overflow: hidden;
-                .content_top_left {
-                  float: left;
-                  width: 45%;
-
-                  .left_item {
-                    margin-bottom: 16px;
-                    display: flex;
-
-                    .title {
-                      width: 100px;
-                      line-height: 38px;
-
-                      .improtant_ico {
-                        color: #ff3a36;
-                      }
-                    }
-
-                    .task_new_input {
-                      flex: 1;
-
-                      .el-input__inner {
-                        height: 38px;
-                      }
-                    }
-                  }
-                }
-
-                .content_top_right {
-                  float: right;
-                  width: 45%;
-
-                  .right_item {
-                    margin-bottom: 16px;
-                    display: flex;
-
-                    .title {
-                      width: 100px;
-                      line-height: 38px;
-
-                      .improtant_ico {
-                        color: #ff3a36;
-                      }
-                    }
-
-                    .task_new_input {
-                      flex: 1;
-
-                      .el-input__inner {
-                        height: 38px;
-                      }
-                    }
-                  }
-                }
-              }
-
-              .content_remarks {
-                .title {
-                  font-size: 12px;
-                  color: #999999;
-                }
-
-                /deep/ .el-textarea {
-                  height: 92px;
-                  textarea {
-                    resize: none;
-                    height: 92px;
-                    font-size: 14px;
-                    color: #333;
-                    font-family: PingFang;
-                  }
-                }
-                .el-textarea__inner:hover {
-                  border: none;
-                }
-
-                .el-textarea__inner {
-                  border: none;
-                  background: #f8f8f8;
-                }
-              }
-
-              .content_table {
-                margin-top: 16px;
-
-                /deep/ .el-table td {
-                  padding: 0;
-                  height: 32px;
-                }
-                /deep/ .el-table th {
-                  padding: 0;
-                  height: 36px;
-                  background: #f8f8f8;
-                  .cell {
-                  }
-                }
-
-                /deep/ .el-pagination {
-                  margin-top: 20px;
-                  text-align: center;
-                }
-              }
-            }
-
-            .btn_box {
-              margin-top: 36px;
-              margin-bottom: 24px;
-              height: 42px;
-              text-align: center;
-
-              .cancel_btn {
-                border: 1px solid #0070ff;
-                background: #fff;
-                color: #0070ff;
-                width: 136px;
-                height: 42px;
-                font-size: 16px;
-              }
-              .next_btn {
-                background-color: #0070ff;
-                color: #fff;
-                width: 136px;
-                height: 42px;
-                font-size: 16px;
-              }
+            .step2_span {
+              font-size: 14px;
             }
           }
 
-          .task_handle_content {
-            .handle_content_top {
-              height: 42px;
-              text-align: left;
-              .change_btn,
-              .ref {
-                background-color: #0070ff;
-                border-color: #0070ff;
-                width: 136px;
-                height: 42px;
-                color: #fff;
+          .step_now {
+            color: #0070ff;
+          }
+
+          .step_past {
+            color: #999999;
+          }
+        }
+
+        .task_new_content {
+          /*height: 480px;*/
+
+          .task_content_box {
+            height: 400px;
+            overflow-y: auto;
+            &::-webkit-scrollbar {
+              /*滚动条整体样式*/
+              width: 6px; /*高宽分别对应横竖滚动条的尺寸*/
+              border-radius: 6px;
+            }
+            &::-webkit-scrollbar-thumb {
+              /*滚动条里面小方块*/
+              border-radius: 6px;
+              background: #a8a8a8;
+            }
+            &::-webkit-scrollbar-track {
+              /*滚动条里面轨道*/
+              border-radius: 6px;
+              background: #f4f4f4;
+            }
+
+            .content_top {
+              overflow: hidden;
+              .content_top_left {
+                float: left;
+                width: 45%;
+
+                .left_item {
+                  margin-bottom: 16px;
+                  display: flex;
+
+                  .title {
+                    width: 100px;
+                    line-height: 38px;
+
+                    .improtant_ico {
+                      color: #ff3a36;
+                    }
+                  }
+
+                  .task_new_input {
+                    flex: 1;
+
+                    .el-input__inner {
+                      height: 38px;
+                    }
+                  }
+                }
               }
 
-              .cel {
-                border: 1px solid #0070ff;
-                background: #fff;
-                color: #0070ff;
-                width: 136px;
-                height: 42px;
-                margin-left: 0;
+              .content_top_right {
+                float: right;
+                width: 45%;
+
+                .right_item {
+                  margin-bottom: 16px;
+                  display: flex;
+
+                  .title {
+                    width: 100px;
+                    line-height: 38px;
+
+                    .improtant_ico {
+                      color: #ff3a36;
+                    }
+                  }
+
+                  .task_new_input {
+                    flex: 1;
+
+                    .el-input__inner {
+                      height: 38px;
+                    }
+                  }
+                }
               }
             }
 
-            .table_box {
-              margin-top: 24px;
-
-              .table_box_title {
-                height: 38px;
-                li {
-                  height: 38px;
-                  width: 92px;
-                  float: left;
-                  font-size: 14px;
-                  line-height: 38px;
-                  color: #bbbbbb;
-                  text-align: center;
-                  border-top: 2px solid #fff;
-                }
-
-                li.active {
-                  cursor: pointer;
-                  background: #eef6ff;
-                  color: #0070ff;
-                  border-top: 2px solid #0070ff;
-                }
-              }
-              /deep/ .el-table {
+            .content_remarks {
+              .title {
                 font-size: 12px;
-                thead.has-gutter {
-                  th {
-                    color: #333333;
-                    background: #f8f8f8;
-                    .cell {
-                    }
-                  }
+                color: #999999;
+              }
+
+              /deep/ .el-textarea {
+                height: 92px;
+                textarea {
+                  resize: none;
+                  height: 92px;
+                  font-size: 14px;
+                  color: #333;
+                  font-family: PingFang;
                 }
+              }
+              .el-textarea__inner:hover {
+                border: none;
+              }
+
+              .el-textarea__inner {
+                border: none;
+                background: #f8f8f8;
+              }
+            }
+
+            .content_table {
+              margin-top: 16px;
+
+              /deep/ .el-table td {
+                padding: 0;
+                height: 32px;
+              }
+              /deep/ .el-table th {
+                padding: 0;
+                height: 36px;
+                background: #f8f8f8;
                 .cell {
-                  color: #333333;
                 }
               }
 
@@ -2199,211 +2118,303 @@ export default {
                 text-align: center;
               }
             }
-
-            .btn_box {
-              margin-top: 36px;
-              margin-bottom: 24px;
-              height: 42px;
-              text-align: center;
-
-              .cancel_btn {
-                border: 1px solid #0070ff;
-                background: #fff;
-                color: #0070ff;
-                width: 136px;
-                height: 42px;
-                font-size: 16px;
-              }
-
-              .prev_btn {
-                background-color: #0070ff;
-                color: #fff;
-                width: 136px;
-                height: 42px;
-                font-size: 16px;
-              }
-            }
-          }
-        }
-      }
-    }
-    //添加到工单
-    /deep/ .pop_state_add {
-      .el-dialog {
-        .el-dialog__header {
-          display: none;
-        }
-
-        .el-dialog__body {
-          /*max-height: 640px;*/
-          padding: 30px;
-
-          .closed_img {
-            position: absolute;
-            top: -18px;
-            right: -18px;
-            cursor: pointer;
-            width: 46px;
-            height: 46px;
           }
 
-          .title {
-            height: 24px;
-            line-height: 24px;
-            text-align: left;
-
-            .title_name {
-              font-size: 20px;
-              color: #333333;
-              line-height: 24px;
-            }
-
-            .mask {
-              width: 24px;
-              height: 0px;
-              border-top: 0px;
-              border-right: 2px solid transparent;
-              border-bottom: 5px solid #0070ff;
-              border-left: 2px solid transparent;
-              transform: rotate3d(0, 0, 1, 90deg);
-              display: inline-block;
-              margin-right: -5px;
-              margin-bottom: 4px;
-              margin-left: -10px;
-            }
-          }
-          .content {
-            padding-top: 16px;
-          }
           .btn_box {
+            margin-top: 36px;
+            margin-bottom: 24px;
             height: 42px;
             text-align: center;
-            margin-bottom: 10px;
 
-            .ok_btn {
+            .cancel_btn {
+              border: 1px solid #0070ff;
+              background: #fff;
+              color: #0070ff;
               width: 136px;
               height: 42px;
-              background: #0070ff;
+              font-size: 16px;
+            }
+            .next_btn {
+              background-color: #0070ff;
+              color: #fff;
+              width: 136px;
+              height: 42px;
+              font-size: 16px;
+            }
+          }
+        }
+
+        .task_handle_content {
+          .handle_content_top {
+            height: 42px;
+            text-align: left;
+            .change_btn,
+            .ref {
+              background-color: #0070ff;
+              border-color: #0070ff;
+              width: 136px;
+              height: 42px;
               color: #fff;
             }
 
-            .cancel_btn {
-              width: 136px;
-              height: 42px;
-              border-color: #0070ff;
+            .cel {
+              border: 1px solid #0070ff;
               background: #fff;
               color: #0070ff;
+              width: 136px;
+              height: 42px;
+              margin-left: 0;
             }
           }
 
-          .el-table__header{
-            .el-checkbox{
-              display: none;
+          .table_box {
+            margin-top: 24px;
+
+            .table_box_title {
+              height: 38px;
+              li {
+                height: 38px;
+                width: 92px;
+                float: left;
+                font-size: 14px;
+                line-height: 38px;
+                color: #bbbbbb;
+                text-align: center;
+                border-top: 2px solid #fff;
+              }
+
+              li.active {
+                cursor: pointer;
+                background: #eef6ff;
+                color: #0070ff;
+                border-top: 2px solid #0070ff;
+              }
+            }
+            /deep/ .el-table {
+              font-size: 12px;
+              thead.has-gutter {
+                th {
+                  color: #333333;
+                  background: #f8f8f8;
+                  .cell {
+                  }
+                }
+              }
+              .cell {
+                color: #333333;
+              }
+            }
+
+            /deep/ .el-pagination {
+              margin-top: 20px;
+              text-align: center;
+            }
+          }
+
+          .btn_box {
+            margin-top: 36px;
+            margin-bottom: 24px;
+            height: 42px;
+            text-align: center;
+
+            .cancel_btn {
+              border: 1px solid #0070ff;
+              background: #fff;
+              color: #0070ff;
+              width: 136px;
+              height: 42px;
+              font-size: 16px;
+            }
+
+            .prev_btn {
+              background-color: #0070ff;
+              color: #fff;
+              width: 136px;
+              height: 42px;
+              font-size: 16px;
             }
           }
         }
       }
     }
-    /deep/ .pop_box {
-      .el-dialog {
-        background: #ffffff;
-        border-radius: 4px;
-        position: fixed;
-        // top: 200px;
-        left: 50%;
-        transform: translateX(-50%);
-      }
-    }
   }
-</style>
-<style lang="less">
-  .s_btn_list {
-    position: absolute;
-    top: 30px;
-    right: 0;
-    width: 308px !important;
-    height: 408px !important;
-    background: #ffffff;
-    padding: 20px 20px !important;
-    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.24);
-    .s_b_name {
-      height: 30px;
-      line-height: 30px;
-      font-family: PingFangSC-Medium;
-      font-size: 16px;
-      color: #333333;
-      font-weight: bold;
-    }
-    .s_b_list {
-      height: 288px;
-      overflow-y: auto;
-      .item {
-        line-height: 24px;
-        font-family: PingFangSC-Regular;
-        font-size: 16px;
-        color: #333333;
-        /deep/ .el-checkbox {
-          .el-checkbox__label {
-            font-family: PingFangSC-Regular;
-            font-size: 16px;
+  //添加到工单
+  /deep/ .pop_state_add {
+    .el-dialog {
+      .el-dialog__header {
+        display: none;
+      }
+
+      .el-dialog__body {
+        /*max-height: 640px;*/
+        padding: 30px;
+
+        .closed_img {
+          position: absolute;
+          top: -18px;
+          right: -18px;
+          cursor: pointer;
+          width: 46px;
+          height: 46px;
+        }
+
+        .title {
+          height: 24px;
+          line-height: 24px;
+          text-align: left;
+
+          .title_name {
+            font-size: 20px;
             color: #333333;
+            line-height: 24px;
+          }
+
+          .mask {
+            width: 24px;
+            height: 0px;
+            border-top: 0px;
+            border-right: 2px solid transparent;
+            border-bottom: 5px solid #0070ff;
+            border-left: 2px solid transparent;
+            transform: rotate3d(0, 0, 1, 90deg);
+            display: inline-block;
+            margin-right: -5px;
+            margin-bottom: 4px;
+            margin-left: -10px;
+          }
+        }
+        .content {
+          padding-top: 16px;
+        }
+        .btn_box {
+          height: 42px;
+          text-align: center;
+          margin-bottom: 10px;
+
+          .ok_btn {
+            width: 136px;
+            height: 42px;
+            background: #0070ff;
+            color: #fff;
+          }
+
+          .cancel_btn {
+            width: 136px;
+            height: 42px;
+            border-color: #0070ff;
+            background: #fff;
+            color: #0070ff;
+          }
+        }
+
+        .el-table__header {
+          .el-checkbox {
+            display: none;
           }
         }
       }
-      &::-webkit-scrollbar {
-        /*滚动条整体样式*/
-        width: 4px;
-        /*高宽分别对应横竖滚动条的尺寸*/
-        /* border-radius: 6px;*/
-      }
-      &::-webkit-scrollbar-thumb {
-        /*滚动条里面小方块*/
-        border-radius: 6px;
-        background: #0070ff;
-        /*background: red;*/
-      }
-      &::-webkit-scrollbar-track {
-        /*滚动条里面轨道*/
-        border-radius: 6px;
-        background: #f4f4f4;
+    }
+  }
+  /deep/ .pop_box {
+    .el-dialog {
+      background: #ffffff;
+      border-radius: 4px;
+      position: fixed;
+      // top: 200px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+</style>
+<style lang="less">
+.s_btn_list {
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 308px !important;
+  height: 408px !important;
+  background: #ffffff;
+  padding: 20px 20px !important;
+  box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.24);
+  .s_b_name {
+    height: 30px;
+    line-height: 30px;
+    font-family: PingFangSC-Medium;
+    font-size: 16px;
+    color: #333333;
+    font-weight: bold;
+  }
+  .s_b_list {
+    height: 288px;
+    overflow-y: auto;
+    .item {
+      line-height: 24px;
+      font-family: PingFangSC-Regular;
+      font-size: 16px;
+      color: #333333;
+      /deep/ .el-checkbox {
+        .el-checkbox__label {
+          font-family: PingFangSC-Regular;
+          font-size: 16px;
+          color: #333333;
+        }
       }
     }
-    .s_b_group {
-      margin-top: 10px;
-      height: 40px;
-      line-height: 50px;
-      text-align: center;
-      /deep/ .s_bg {
-        font-size: 14px;
-        height: 34px;
-        width: 96px;
-        outline: none;
-        margin-right: 8px;
-        line-height: 0;
-        padding: 0;
-        font-family: PingFangMedium;
-        &.s_bg_submit {
+    &::-webkit-scrollbar {
+      /*滚动条整体样式*/
+      width: 4px;
+      /*高宽分别对应横竖滚动条的尺寸*/
+      /* border-radius: 6px;*/
+    }
+    &::-webkit-scrollbar-thumb {
+      /*滚动条里面小方块*/
+      border-radius: 6px;
+      background: #0070ff;
+      /*background: red;*/
+    }
+    &::-webkit-scrollbar-track {
+      /*滚动条里面轨道*/
+      border-radius: 6px;
+      background: #f4f4f4;
+    }
+  }
+  .s_b_group {
+    margin-top: 10px;
+    height: 40px;
+    line-height: 50px;
+    text-align: center;
+    /deep/ .s_bg {
+      font-size: 14px;
+      height: 34px;
+      width: 96px;
+      outline: none;
+      margin-right: 8px;
+      line-height: 0;
+      padding: 0;
+      font-family: PingFangMedium;
+      &.s_bg_submit {
+        color: #fff;
+        background: #0070ff;
+        border: 1px solid #0070ff;
+        &:hover {
           color: #fff;
           background: #0070ff;
           border: 1px solid #0070ff;
-          &:hover {
-            color: #fff;
-            background: #0070ff;
-            border: 1px solid #0070ff;
-          }
         }
-        &.s_bg_cancel {
+      }
+      &.s_bg_cancel {
+        color: #0070ff;
+        border: 1px solid #0070ff;
+        background-color: #fff;
+        &:hover {
           color: #0070ff;
           border: 1px solid #0070ff;
           background-color: #fff;
-          &:hover {
-            color: #0070ff;
-            border: 1px solid #0070ff;
-            background-color: #fff;
-          }
         }
       }
     }
   }
-   //.el-table th.gutter{display: table-cell!important;}
+}
+//.el-table th.gutter{display: table-cell!important;}
 </style>

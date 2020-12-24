@@ -1,5 +1,6 @@
 <template>
-  <div class="home_overview" v-loading.fullscreen.lock="loading"
+  <div class="home_overview"
+       v-loading.fullscreen.lock="loading"
        v-cloak>
     <div class="container">
 
@@ -159,7 +160,8 @@
               </p>
             </div>
             <div class="bom_mid_content">
-              <bom-mid :bom_mid="bom_mid" v-if="bom_mid_show"></bom-mid>
+              <bom-mid :bom_mid="bom_mid"
+                       v-if="bom_mid_show"></bom-mid>
             </div>
           </div>
         </el-col>
@@ -243,7 +245,7 @@ import bomRight from "./vm-home/bom-right";
 
 import { eventBus } from '@/components/common/eventBus.js';
 
-import {isSynthetical} from "../../../assets/js/validate";
+import { isSynthetical } from "../../../assets/js/validate";
 export default {
   name: "system_control_move",
   data () {
@@ -328,26 +330,14 @@ export default {
             msg,
             data
           } = resp.data;
-          if(status != 0){
-            for(let key in msg){
-              if(key == 600){
-                this.$message(
-                  {
-                    message: msg[key],
-                    type: 'warning',
-                  }
-                );
+          if (status == 602) {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
               }
-              if(key == 602){
-                this.$message(
-                  {
-                    message: msg[key],
-                    type: 'warning',
-                  }
-                );
-                eventBus.$emit('reset');
-              }
-            }
+            )
+            eventBus.$emit('reset')
           }
         })
     },
@@ -362,9 +352,9 @@ export default {
           } = resp.data;
           if (status == 0) {
 
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.top_left = data;
               this.top_left_show = true;
             }
@@ -384,9 +374,9 @@ export default {
           } = resp.data;
 
           if (status == 0) {
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.top_mid = data;
               this.top_mid_show = true;
             }
@@ -404,9 +394,9 @@ export default {
           //console.log(data)
           if (status == 0) {
 
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.top_right = data;
               this.top_right_show = true;
             }
@@ -425,9 +415,9 @@ export default {
           } = resp.data;
           if (status == 0) {
 
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.mid_left = data;
               this.mid_left_show = true;
             }
@@ -443,9 +433,9 @@ export default {
             data
           } = resp.data;
           if (status == 0) {
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.mid_mid = data;
               this.mid_mid_show = true;
             }
@@ -463,9 +453,9 @@ export default {
           } = resp.data;
           if (status == 0) {
 
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.mid_right = data;
               this.mid_right_show = true;
             }
@@ -484,9 +474,9 @@ export default {
             data
           } = resp.data;
           if (status == 0) {
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.bom_left = data;
               this.bom_left_show = true;
             }
@@ -504,9 +494,9 @@ export default {
           } = resp.data;
           if (status == 0) {
 
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.bom_mid = data;
               this.bom_mid_show = true;
             }
@@ -524,9 +514,9 @@ export default {
             data
           } = resp.data;
           if (status == 0) {
-            if(!isSynthetical(data)){
+            if (!isSynthetical(data)) {
               return false;
-            }else {
+            } else {
               this.bom_right = data;
               this.bom_right_show = true;
             }
@@ -753,8 +743,8 @@ export default {
         tooltip: {
           trigger: 'item',
           formatter: function (params, trigger) {
-           // console.log(params);
-           // console.log(trigger);
+            // console.log(params);
+            // console.log(trigger);
             if (params.dataType == 'node') {
               return '设备：' + params.data.dev_name + '</br>' + 'IP地址：' + params.data.dev_ip + '</br>' + '状态：' + params.data.status
             } else {
@@ -796,7 +786,7 @@ export default {
       //添加点击事件
       myChart.off("click"); //防止累计触发
       myChart.on('click', (params) => {
-       // console.log(params.data);
+        // console.log(params.data);
         //console.log(this.state_detail);
         this.state_detail = true;
         this.iot_detail_top(params.data)
@@ -886,7 +876,7 @@ export default {
           backgroundColor: "#fff",
           textStyle: {
             color: "#ccc",
-            align:'left'
+            align: 'left'
           },
           axisPointer: {
             lineStyle: {
@@ -1525,7 +1515,7 @@ export default {
     }
   }
 }
-.el-loading-mask{
-  z-index: 99999!important;
+.el-loading-mask {
+  z-index: 99999 !important;
 }
 </style>
