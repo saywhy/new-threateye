@@ -41,7 +41,7 @@
         this.$axios.post('/yiiapi/site/login')
           .then(resp => {
 
-            console.log(resp)
+          //  console.log(resp)
         //  let datas = resp.data;
 
             let {status, msg} = resp.data;

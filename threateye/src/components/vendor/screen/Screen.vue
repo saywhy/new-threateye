@@ -64,12 +64,8 @@
         </div>
         <div class="list-item list-item-bottom"
              :class="{'active':!close}">
-          <header class="title title-flow">
-            <span class="t1">协议统计
-              <span class="t11">单位(P/s)</span>
-            </span>
-            <span class="t2">实时威胁检测</span>
-            <span class="t3">实时告警</span>
+          <header class="title">实时高危威胁
+            <i class="t_img"></i>
           </header>
           <vm-screen-middle2></vm-screen-middle2>
         </div>
@@ -102,7 +98,6 @@
 import draggable from 'vuedraggable';
 
 import screenfull from 'screenfull';
-
 import VmScreenAll from './vm-screen/vm-screen-all';
 import VmScreenMiddle0 from './vm-screen/vm-screen-middle0';
 import VmScreenMiddle1 from './vm-screen/vm-screen-middle1';
@@ -130,7 +125,7 @@ export default {
   data () {
     return {
       isFullscreen: false,
-      threatEyeName: 'ThreatEye高级威胁检测系统',
+      threatEyeName: 'iView态势感知系统',
       totalLists: [],
       totalTopLists: [],
       name: '外连分布'
