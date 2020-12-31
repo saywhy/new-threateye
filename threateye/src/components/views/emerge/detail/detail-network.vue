@@ -480,7 +480,7 @@
                                min-width="150"
                                :prop="dropCol[index].prop"
                                :label="item.label">
-                <template slot-scope="scope">{{ scope.row.alert_time | time }}</template>
+                <template slot-scope="scope">{{ scope.row.alert_time }}</template>
               </el-table-column>
               <!--威胁等级-->
               <el-table-column align="center"
@@ -522,7 +522,7 @@
                                min-width="150"
                                :prop="dropCol[index].prop"
                                :label="item.label">
-                <template slot-scope="scope">{{ scope.row.updated_at | time }}</template>
+                <template slot-scope="scope">{{ scope.row.updated_at }}</template>
               </el-table-column>
               <!--其他-->
               <el-table-column align="center"
@@ -563,7 +563,7 @@
                                min-width="150"
                                :prop="dropCol[index].prop"
                                :label="item.label">
-                <template slot-scope="scope">{{ scope.row.alert_time | time }}</template>
+                <template slot-scope="scope">{{ scope.row.alert_time}}</template>
               </el-table-column>
               <!--威胁等级-->
               <el-table-column align="center"
@@ -605,7 +605,7 @@
                                min-width="150"
                                :prop="dropCol[index].prop"
                                :label="item.label">
-                <template slot-scope="scope">{{ scope.row.updated_at | time }}</template>
+                <template slot-scope="scope">{{ scope.row.updated_at }}</template>
               </el-table-column>
               <!--其他-->
               <el-table-column align="center"
@@ -2149,6 +2149,9 @@ export default {
                     value: item.alert_description.IP,
                   },
                 ];
+                if (item.alert_description.MD5) {
+                  item.alert_description.md5 = item.alert_description.MD5
+                }
                 if (item.alert_description.category == '恶意程序') {
                   item.info_list.push({
                     name: "文件下载",
@@ -2248,6 +2251,9 @@ export default {
                     value: item.alert_description.geo,
                   },
                 ];
+                if (item.alert_description.MD5) {
+                  item.alert_description.md5 = item.alert_description.MD5
+                }
                 if (item.alert_description.category == '恶意程序') {
                   item.info_list.push({
                     name: "文件下载",
@@ -2284,7 +2290,9 @@ export default {
                     value: item.alert_description.threat
                   },
                 ];
-
+                if (item.alert_description.MD5) {
+                  item.alert_description.md5 = item.alert_description.MD5
+                }
                 if (item.alert_description.category == '恶意程序') {
                   item.info_list.push({
                     name: "文件下载",
@@ -2338,7 +2346,9 @@ export default {
                     })
                   }
                 });
-
+                if (item.alert_description.MD5) {
+                  item.alert_description.md5 = item.alert_description.MD5
+                }
                 if (item.alert_description.category == '恶意程序') {
                   item.info_list.push({
                     name: "文件下载",
@@ -2371,6 +2381,9 @@ export default {
                     value: item.alert_description.rule_name,
                   },
                 ];
+                if (item.alert_description.MD5) {
+                  item.alert_description.md5 = item.alert_description.MD5
+                }
                 if (item.alert_description.category == '恶意程序') {
                   item.info_list.push({
                     name: "文件下载",
@@ -2764,6 +2777,7 @@ export default {
     },
     // 下载payload
     download (value, item) {
+      console.log(value);
       if (value.value == "点击下载" && value.name == "PayLoad信息") {
         this.$axios.get('/yiiapi/site/check-auth-exist', {
           params: {

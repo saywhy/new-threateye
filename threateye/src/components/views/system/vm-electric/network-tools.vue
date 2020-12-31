@@ -1,5 +1,6 @@
 <template>
-  <div id="network-tools">
+  <div id="network-tools"
+       v-loading.fullscreen.lock="loading">
     <div>
       <span class="red">*</span>
       <el-input class="input_box"
@@ -14,13 +15,16 @@
       </el-input>
       <el-button class="btn_i"
                  plain
-                 disabled
                  @click="Ping_search">Ping</el-button>
       <el-button class="btn_i"
-                 disabled
                  @click="Telnet_search">Telnet</el-button>
-      <div class="content">
-
+      <div class="box">
+        <div class="content">
+          <p v-for="item in ping.data"
+             class="item_style">
+            {{item}}
+          </p>
+        </div>
       </div>
     </div>
   </div>
@@ -32,9 +36,11 @@ export default {
   name: "network-tools",
   data () {
     return {
+      loading: false,
       ping: {
         ip: '',
-        port: ''
+        port: '',
+        data: []
       }
 
     };
@@ -78,11 +84,93 @@ export default {
         })
     },
     Ping_search () {
+      // 
+      if (this.ping.ip == '') {
+        this.$message(
+          {
+            message: 'ip地址不能为空',
+            type: 'warning',
+          }
+        );
+        return false;
+      }
+      this.loading = true;
+      this.$axios.get('/yiiapi/seting/ping', {
+        params: {
+          ip: this.ping.ip
+        }
+      })
+        .then(resp => {
+          this.loading = false;
+          let {
+            status,
+            msg,
+            data
+          } = resp.data;
+          if (status == 1) {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+          } else if (status == 0) {
+            this.ping.data = data
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        })
       // 在第一个写着Ping的按钮上面写“Ping”， ping的时候IP地址必选
       // 在第二个写着Ping的按钮上面写“Telnet”，在点击这个按钮的时候IP地址和端口号都必填
     },
     Telnet_search () {
-
+      if (this.ping.ip == '') {
+        this.$message(
+          {
+            message: 'ip地址不能为空',
+            type: 'warning',
+          }
+        );
+        return false;
+      }
+      if (this.ping.port == '') {
+        this.$message(
+          {
+            message: '端口号不能为空',
+            type: 'warning',
+          }
+        );
+        return false;
+      }
+      this.loading = true;
+      this.$axios.get('/yiiapi/seting/telnet', {
+        params: {
+          ip: this.ping.ip,
+          port: this.ping.port
+        }
+      })
+        .then(resp => {
+          this.loading = false;
+          let {
+            status,
+            msg,
+            data
+          } = resp.data;
+          if (status == 1) {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+          } else if (status == 0) {
+            this.ping.data = data
+          }
+        })
+        .catch(error => {
+          console.log(error);
+        })
     }
 
   }
@@ -110,12 +198,24 @@ export default {
     background: #0070ff;
     color: #fff;
   }
+  .box {
+    width: 100%;
+    padding-right: 24px;
+    // border: 1px solid red;
+    min-height: 400px;
+  }
   .content {
     margin-top: 42px;
+    margin-right: 42px;
+    margin-bottom: 42px;
+    padding: 24px;
     // border: 1px solid red;
-    width: 800px;
+    width: 100%;
     background: #f8f8f8;
-    height: 400px;
+    min-height: 400px;
+    .item_style {
+      color: #03a89e;
+    }
   }
 }
 </style>

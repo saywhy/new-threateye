@@ -293,9 +293,51 @@ export default {
     }
   },
   mounted () {
+    this.check_passwd()
+    this.get_data()
   },
 
   methods: {
+    // 测试密码过期
+    check_passwd () {
+      this.$axios.get('/yiiapi/site/check-passwd-reset')
+        .then((resp) => {
+          let {
+            status,
+            msg,
+            data
+          } = resp.data;
+          if (status == '602') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+            eventBus.$emit('reset')
+          }
+          if (status == '600') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+          }
+        })
+    },
+    // 获取列表
+    get_data () {
+      this.loading = true
+      this.$axios.get('/yiiapi/snmp/index')
+        .then(response => {
+          this.loading = false;
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        })
+    },
     set_switch () {
       console.log('111');
       this.snmp.v1_show = this.snmp.switch

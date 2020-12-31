@@ -141,25 +141,25 @@ export default {
         cancelButtonText: '取消',
         type: 'warning'
       }).then(() => {
-        // this.loading = true
-        // this.$axios.put('/yiiapi/seting/reboot')
-        //   .then(response => {
-        //     this.loading = false
-        //     let { status, data } = response.data;
-        //     if (status == 0) {
-        //       this.$message(
-        //         {
-        //           message: '执行设备关机成功',
-        //           type: 'success',
-        //         }
-        //       );
-        //       location.reload();
-        //       this.$router.push('/login');
-        //     }
-        //   })
-        //   .catch(error => {
-        //     console.log(error);
-        //   })
+        this.loading = true
+        this.$axios.put('/yiiapi/seting/shut-down')
+          .then(response => {
+            this.loading = false
+            let { status, data } = response.data;
+            if (status == 0) {
+              this.$message(
+                {
+                  message: '执行设备关机成功',
+                  type: 'success',
+                }
+              );
+              location.reload();
+              this.$router.push('/login');
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          })
       }).catch(() => {
         this.$message({
           type: 'info',
