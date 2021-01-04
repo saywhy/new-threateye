@@ -67,7 +67,7 @@
       //两侧内容点击删除
       asideDelClick(id) {
         this.$store.commit('SET_ASIDE_LISTS_ID', {id,id,flag:false});
-      },
+      }
     }
   }
 </script>

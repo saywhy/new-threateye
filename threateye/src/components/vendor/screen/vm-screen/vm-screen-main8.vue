@@ -33,6 +33,8 @@
           this.$axios
             .get('/yiiapi/demonstration/risk-trend')
             .then((resp) => {
+
+
               let {status, data} = resp.data;
 
               if(status == 0){
@@ -94,8 +96,8 @@
             },
             grid: {
               top:'5%',
-              left: '2%',
-              right: '6%',
+              left: '0',
+              right: '4%',
               bottom: '0',
               containLabel: true
             },
