@@ -1263,6 +1263,7 @@ export default {
       }
       this.get_list_risk();
     },
+
     mousedown (event) {
       this.oldPositon = {
         x: '',
