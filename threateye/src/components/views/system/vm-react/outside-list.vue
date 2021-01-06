@@ -54,19 +54,19 @@
       <div class="content_left content_common">
         <p class="title">恶意哈希列表：</p>
         <p>
-          <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
+          <span>{{hostip}}/MaliciousHash?uname=账号&passwd=密码</span>
         </p>
         <div class="list_box">
           <p class="list_title_box">
             <span>哈希:</span>
             <el-button class="btn_i"
-                       @click="add_url">添加</el-button>
+                       @click="add_hash">添加</el-button>
           </p>
           <div class="item_box"
-               v-for="(item,index) in outside_list.url"
-               @mouseenter="enter_url(index)"
+               v-for="(item,index) in outside_list.hash"
+               @mouseenter="enter_hash(index)"
                :class="item.class==''?'':item.class"
-               @mouseleave="leave_url(index)">
+               @mouseleave="leave_hash(index)">
             <span>{{item.addr}}</span>
             <img class="del_img"
                  v-if="item.icon"
@@ -143,6 +143,39 @@
                    @click="add_list('2')">确定</el-button>
       </div>
     </el-dialog>
+    <!-- 添加hash -->
+    <el-dialog class="add_box pop_box"
+               :close-on-click-modal="false"
+               :modal-append-to-body="false"
+               :visible.sync="outside_pop.hash.show">
+      <img src="@/assets/images/emerge/closed.png"
+           @click="closed_hash_box"
+           class="closed_img"
+           alt="">
+      <div class="title">
+        <div class="mask"></div>
+        <span class="title_name">添加哈希</span>
+      </div>
+      <div class="content">
+        <div class="content_item">
+          <p>
+            <span class="title">哈希</span>
+            <span class="red_necessary">*</span>
+          </p>
+          <el-input class="select_box"
+                    placeholder="请输入哈希"
+                    v-model="outside_pop.hash.hash"
+                    clearable>
+          </el-input>
+        </div>
+      </div>
+      <div class="btn_box">
+        <el-button @click="closed_hash_box"
+                   class="cancel_btn">取消</el-button>
+        <el-button class="ok_btn"
+                   @click="add_list('3')">确定</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
@@ -154,7 +187,8 @@ export default {
     return {
       outside_list: {
         ip: [],
-        url: []
+        url: [],
+        hash: []
       },
       outside_pop: {
         ip: {
@@ -164,6 +198,10 @@ export default {
         url: {
           show: false,
           url: ""
+        },
+        hash: {
+          show: false,
+          hash: ""
         },
       },
       hostip: '',
@@ -178,6 +216,7 @@ export default {
   mounted () {
     this.get_list('1')
     this.get_list('2')
+    this.get_list('3')
     this.get_ip()
     this.check_passwd()
     // 必填；只能是1和2；动态类型，1Ip，2url
@@ -250,6 +289,13 @@ export default {
               this.$set(item, 'class', '')
             })
           }
+          if (type == '3') {
+            this.outside_list.hash = response.data.data.data
+            this.outside_list.hash.forEach(item => {
+              this.$set(item, 'icon', false)
+              this.$set(item, 'class', '')
+            })
+          }
         })
         .catch(error => {
           console.log(error);
@@ -286,6 +332,18 @@ export default {
             return false
           }
           addr_params = this.outside_pop.url.url
+          break;
+        case '3':
+          if (this.outside_pop.hash.hash == '') {
+            this.$message(
+              {
+                message: '请输入哈希',
+                type: 'warning',
+              }
+            );
+            return false
+          }
+          addr_params = this.outside_pop.hash.hash
           break;
         default:
           break;
@@ -325,6 +383,16 @@ export default {
                   }
                 );
                 break;
+              case '3':
+                this.get_list('3')
+                this.outside_pop.hash.show = false;
+                this.$message(
+                  {
+                    message: '添加哈希成功',
+                    type: 'success',
+                  }
+                );
+                break;
               default:
                 break;
             }
@@ -336,6 +404,11 @@ export default {
     },
     add_url () {
       this.outside_pop.url.show = true;
+      this.outside_pop.url.url = ''
+    },
+    add_hash () {
+      this.outside_pop.hash.show = true;
+      this.outside_pop.hash.hash = ''
     },
     // 删除ip
     del_list (item) {
@@ -357,6 +430,7 @@ export default {
             if (response.data.status == 0) {
               this.get_list('1');
               this.get_list('2');
+              this.get_list('3');
               this.$message(
                 {
                   message: '删除成功！',
@@ -388,6 +462,9 @@ export default {
     closed_url_box () {
       this.outside_pop.url.show = false;
     },
+    closed_hash_box () {
+      this.outside_pop.hash.show = false;
+    },
     enter (num) {
       this.outside_list.ip.forEach((item, index) => {
         if (num == index) {
@@ -407,6 +484,14 @@ export default {
     leave_url (index) {
       this.outside_list.url[index].icon = false
       this.outside_list.url[index].class = ''
+    },
+    enter_hash (index) {
+      this.outside_list.hash[index].icon = true
+      this.outside_list.hash[index].class = 'active'
+    },
+    leave_hash (index) {
+      this.outside_list.hash[index].icon = false
+      this.outside_list.hash[index].class = ''
     }
   }
 };
