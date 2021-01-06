@@ -1,5 +1,6 @@
 <template>
-  <div id="outside_list">
+  <div id="outside_list"
+       v-loading.fullscreen.lock="loading">
     <div class="outside_content">
       <div class="content_left content_common">
         <p class="title">恶意IP列表：</p>
@@ -58,9 +59,11 @@
         </p>
         <div class="list_box">
           <p class="list_title_box">
-            <span>哈希:</span>
+            <span>SHA256:</span>
             <el-button class="btn_i"
                        @click="add_hash">添加</el-button>
+            <el-button class="btn_i"
+                       @click="import_all">全部导入</el-button>
           </p>
           <div class="item_box"
                v-for="(item,index) in outside_list.hash"
@@ -185,6 +188,7 @@ export default {
   name: "outside_list",
   data () {
     return {
+      loading: false,
       outside_list: {
         ip: [],
         url: [],
@@ -492,6 +496,41 @@ export default {
     leave_hash (index) {
       this.outside_list.hash[index].icon = false
       this.outside_list.hash[index].class = ''
+    },
+    import_all () {
+      this.$confirm('确认导入平台发现的所有恶意程序哈希值？', '提示', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        this.loading = true;
+        // yiiapi/linkage/import-all
+        this.$axios.post('/yiiapi/linkage/import-all')
+          .then(response => {
+            this.loading = false;
+            let {
+              status,
+              msg,
+              data
+            } = response.data;
+            if (status == 0) {
+              this.$message(
+                {
+                  message: '导入成功！',
+                  type: 'success',
+                }
+              );
+            }
+          })
+          .catch(error => {
+            console.log(error);
+          })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消导入'
+        });
+      })
     }
   }
 };
