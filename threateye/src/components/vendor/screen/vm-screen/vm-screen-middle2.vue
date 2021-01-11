@@ -145,6 +145,9 @@
           let option = {
             tooltip: {
               trigger: 'axis',
+              textStyle:{
+                align:'left'
+              },
               axisPointer: {
                 type: 'shadow'
               }

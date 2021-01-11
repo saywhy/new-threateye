@@ -3,9 +3,10 @@ export default {
   state: {
     //基础信息
     baseInfo:{
-      ScreenName:'',
-      ExtraneousDistributionType:'',
-      ExtraneousDistribution: [{name: "", cascader: []}]
+      Carousel:'cal0',
+      ScreenName: 'iView态势感知系统',
+      ExtraneousDistribution:[],
+      ExtraneousDistributionType:'headquarters'
     },
     //两侧数据
     asideLists:[{name:'威胁分布',alias:'threatDistribution', flag: true, aside_id: 0},

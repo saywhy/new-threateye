@@ -6,7 +6,7 @@
       <div class="home_l">
         <label class="e_label"></label>
       </div>
-      <div class="home_c">{{baseInfo.ScreenName}}</div>
+      <div class="home_c">{{base.ScreenName}}</div>
       <div class="home_r">
         <el-button type="primary"
                    class="e_btn e_btn_quit"
@@ -139,7 +139,7 @@ export default {
 
   computed: {
     ...mapGetters({
-      baseInfo: 'baseInfo',
+      base: 'baseInfo',
       lists: 'asideLists',
       topLists: 'topLists',
     }),
@@ -184,6 +184,9 @@ export default {
       //深度监听
       deep: true
     },
+    'base.ScreenName'(newValue, oldValue) {
+      this.base.ScreenName = newValue;
+    }
   },
   mounted () {
     window.onresize = () => {
