@@ -14,9 +14,7 @@
                         :autoStart='true'
                         :fileStatusText='fileStatusText'
                         @file-added="onFileAdded"
-                        @upload-start="onFilestart"
                         @file-success="onFileSuccess"
-                        @file-progress="onFileProgress"
                         @file-error="onFileError"
                         class="uploader_box">
                 <uploader-unsupport></uploader-unsupport>

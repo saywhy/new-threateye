@@ -132,7 +132,7 @@
             </li>
             <li class="item_li">
               <span class="item_li_title">更新时间:</span>
-              <span class="item_li_content">{{network_times_active.detect_engine}}</span>
+              <span class="item_li_content">{{network_times_active.updated_at |time}}</span>
             </li>
             <li class="item_li">
               <span class="item_li_title">威胁指标:</span>
