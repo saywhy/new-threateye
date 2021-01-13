@@ -40,6 +40,7 @@
               </el-dropdown>
               <el-dropdown @command="change_task"
                            placement='bottom-start'
+                           class="margin_auto"
                            trigger="click">
                 <el-button type="primary"
                            class="change_btn">
@@ -3776,6 +3777,9 @@ export default {
 .el-input__inner {
   background: #f8f8f8;
   border: 0;
+}
+.margin_auto {
+  margin: 0 12px;
 }
 .src_dropdown_box {
   border: none;
