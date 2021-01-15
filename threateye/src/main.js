@@ -85,8 +85,8 @@ router.beforeEach((to, from, next) => {
             store.dispatch('LogOut');
           } else {
             store.dispatch('GenerateRoutes', {
-                roles
-              })
+              roles
+            })
               .then(() => { // 生成可访问的路由表
 
                 router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
