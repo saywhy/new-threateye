@@ -758,7 +758,7 @@ export default {
         update_stime: '',
         update_etime: '',
         label: '',
-        sort: 'degree'
+        sort: 'alert_time'
       },
       options_degree: [
         {
@@ -1259,7 +1259,7 @@ export default {
       } else if (val.prop == 'degree') {
         this.params.sort = 'degree';
       } else {
-        this.params.sort = 'degree';
+        this.params.sort = 'alert_time';
       }
       this.get_list_risk();
     },
