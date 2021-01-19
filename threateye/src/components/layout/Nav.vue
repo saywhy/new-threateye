@@ -431,7 +431,7 @@ export default {
     .header-logo {
       .e-image {
         margin: 9px 0;
-        width: 152px;
+        // width: 152px;
         height: 42px;
         cursor: pointer;
       }

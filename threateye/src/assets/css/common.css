@@ -257,3 +257,9 @@ textarea {
 .el-table--border::after {
   width: 0;
 }
+
+.el-range-input {
+  background-color: #f8f8f8;
+  border-width: 0;
+  outline: none;
+}
