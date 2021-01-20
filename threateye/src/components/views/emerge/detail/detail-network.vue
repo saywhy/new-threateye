@@ -775,7 +775,7 @@
                   <el-checkbox label="message"
                                value="message">短信通知</el-checkbox>
                   <el-checkbox label="news"
-                             value="news">消息中心通知</el-checkbox>
+                               value="news">消息中心通知</el-checkbox>
                 </el-checkbox-group>
               </li>
             </div>
@@ -2709,11 +2709,11 @@ export default {
     handleSizeChange_now (val) {
       this.emerge_list.now_data.rows = val;
       this.emerge_list.now_data.page = 1;
-      this.new_list();
+      this.new_list(this.network_times_active.indicator);
     },
     handleCurrentChange_now (val) {
       this.emerge_list.now_data.page = val;
-      this.new_list();
+      this.new_list(this.network_times_active.indicator);
     },
     // 历史受威胁资产
     old_list (indicator) {
@@ -2759,11 +2759,11 @@ export default {
     handleSizeChange_old (val) {
       this.emerge_list.old_data.rows = val;
       this.emerge_list.old_data.page = 1;
-      this.old_list();
+      this.old_list(this.network_times_active.indicator);
     },
     handleCurrentChange_old (val) {
       this.emerge_list.old_data.page = val;
-      this.old_list();
+      this.old_list(this.network_times_active.indicator);
     },
 
     // 状态变更
