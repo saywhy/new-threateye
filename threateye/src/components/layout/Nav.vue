@@ -10,7 +10,7 @@
              @click="enter_home">
           <img class="e-image"
                :src="logoSrc">
-          <span id="title">Threateye</span>
+          <!-- <span id="title">Threateye</span> -->
         </div>
       </el-col>
       <el-col :span="12">
