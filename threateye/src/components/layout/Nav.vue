@@ -10,6 +10,7 @@
              @click="enter_home">
           <img class="e-image"
                :src="logoSrc">
+          <span id="title">Threateye</span>
         </div>
       </el-col>
       <el-col :span="12">
@@ -430,6 +431,7 @@ export default {
   .nav_user {
     .header-logo {
       .e-image {
+        vertical-align: middle;
         margin: 9px 0;
         // width: 152px;
         height: 42px;
@@ -569,6 +571,7 @@ export default {
 .nav-dropdown-menu {
   top: 60px !important;
   font-family: 'PingFang';
+
   a {
     text-decoration: none;
   }
@@ -577,6 +580,12 @@ export default {
   }
 }
 #Nav {
+  #title {
+    color: #fff;
+    font-size: 24px;
+    font-weight: 700;
+    vertical-align: middle;
+  }
   .pop_box_password {
     .el-dialog {
       background: #ffffff;
