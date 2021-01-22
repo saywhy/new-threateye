@@ -7,7 +7,7 @@
            src="@/assets/images/login/logo.png"
            alt="logo" />
       <!-- <span class="l_product_title">ThreatEye</span> -->
-      <h4 class="l_product_name">众人智能高级威胁（APT)预警系统</h4>
+      <h4 class="l_product_name">众人智能高级威胁（APT）预警系统</h4>
       <!-- <h4 class="l_product_name">ThreatEye高级威胁检测系统</h4> -->
       <!-- <p class="l_product_content">ThreatEye Advanced Threat Detection System</p> -->
     </div>

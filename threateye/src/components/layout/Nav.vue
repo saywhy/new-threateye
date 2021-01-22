@@ -433,7 +433,7 @@ export default {
       .e-image {
         vertical-align: middle;
         margin: 9px auto;
-        width: 140px;
+        // width: 140px;
         height: 42px;
         cursor: pointer;
       }
