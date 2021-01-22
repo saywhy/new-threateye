@@ -10,7 +10,7 @@
              @click="enter_home">
           <img class="e-image"
                :src="logoSrc">
-          <span id="title">Threateye</span>
+          <!-- <span id="title">Threateye</span> -->
         </div>
       </el-col>
       <el-col :span="12">
@@ -432,8 +432,8 @@ export default {
     .header-logo {
       .e-image {
         vertical-align: middle;
-        margin: 9px 0;
-        // width: 152px;
+        margin: 9px auto;
+        width: 140px;
         height: 42px;
         cursor: pointer;
       }
