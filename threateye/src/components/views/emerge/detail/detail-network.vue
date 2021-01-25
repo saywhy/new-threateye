@@ -3854,9 +3854,9 @@ export default {
   border: none;
 }
 .change_src_btn {
-  background: none;
-  border: none;
-  padding: 0;
+  background: none !important;
+  border: none !important;
+  padding: 0 !important;
 }
 .dropdown_ul_box_detail {
   // width: 124px;
