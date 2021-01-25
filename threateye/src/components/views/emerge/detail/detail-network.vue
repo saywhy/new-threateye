@@ -3256,30 +3256,32 @@ export default {
         }).then(() => {
           console.log('1111111');
 
-          // var join = ''
-          // // horizontalthreat  横向威胁告警  lateral
-          // // externalthreat  外部威胁告警  outside
-          // // outreachthreat  外联威胁告警  outreath
-          // switch (this.$route.query.type) {
-          //   case 'alert':
-          //     join = '/yiiapi/alert/join-external-dynamics'
-          //     break;
-          //   case 'asset':
-          //     join = '/yiiapi/asset/join-external-dynamics'
-          //     break;
-          //   case 'lateral':
-          //     join = '/yiiapi/horizontalthreat/join-external-dynamics'
-          //     break;
-          //   case 'outside':
-          //     join = '/yiiapi/externalthreat/join-external-dynamics'
-          //     break;
-          //   case 'outreath':
-          //     join = '/yiiapi/outreachthreat/join-external-dynamics'
-          //     break;
-          //   default:
-          //     break;
-          // }
-          this.$axios.post('/yiiapi/linkage/add', {
+          var join = ''
+          // horizontalthreat  横向威胁告警  lateral
+          // externalthreat  外部威胁告警  outside
+          // outreachthreat  外联威胁告警  outreath
+          switch (this.$route.query.type) {
+            case 'alert':
+              join = '/yiiapi/alert/join-external-dynamics'
+              break;
+            case 'asset':
+              join = '/yiiapi/asset/join-external-dynamics'
+              break;
+            case 'lateral':
+              join = '/yiiapi/horizontalthreat/join-external-dynamics'
+              break;
+            case 'outside':
+              join = '/yiiapi/externalthreat/join-external-dynamics'
+              break;
+            case 'outreath':
+              join = '/yiiapi/outreachthreat/join-external-dynamics'
+              break;
+            default:
+              break;
+          }
+
+
+          this.$axios.post(join, {
             addr: sha256[0].value,
             type: '3',
           })

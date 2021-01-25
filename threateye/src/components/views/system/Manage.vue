@@ -5,17 +5,17 @@
         <div class="item">
           <div class="item_left">
             <img class="img_box"
-                 src="@/assets/images/setting/yq.png"
+                 :src="ImagesIcon.engine"
                  alt="">
           </div>
           <div class="item_right">
             <p class="item_right_title left_title">引擎</p>
             <p class="">
               <span class="green"></span>
-              <span>在线：
+              <span>在线:
                 <span>{{equipment_top.engine.online_count}}</span> 台</span>
               <span class="red"></span>
-              <span>离线：
+              <span>离线:
                 <span>{{equipment_top.engine.offline_count}}</span>台</span>
             </p>
           </div>
@@ -23,35 +23,35 @@
         <div class="mid item ">
           <div class="item_left">
             <img class="img_box"
-                 src="@/assets/images/setting/yt.png"
+                 :src="ImagesIcon.engineProbe"
                  alt="">
           </div>
           <div class="item_right">
-            <p class="item_right_title ">引擎/探针</p>
+            <p class="item_right_title ">引擎(探针)</p>
             <p class="">
               <span class="green"></span>
-              <span>在线：
-                <span>{{equipment_top.sensor_engine.online_count}}</span>台</span>
+              <span>在线:
+                <span>{{equipment_top.engine_sensor.online_count}}</span>台</span>
               <span class="red"></span>
-              <span>离线：
-                <span>{{equipment_top.sensor_engine.offline_count}}</span>台</span>
+              <span>离线:
+                <span>{{equipment_top.engine_sensor.offline_count}}</span>台</span>
             </p>
           </div>
         </div>
         <div class="mid item ">
           <div class="item_left">
             <img class="img_box"
-                 src="@/assets/images/setting/tz.png"
+                 :src="ImagesIcon.probe"
                  alt="">
           </div>
           <div class="item_right">
             <p class="item_right_title ">探针</p>
             <p class="">
               <span class="green"></span>
-              <span>在线：
+              <span>在线:
                 <span>{{equipment_top.sensor.online_count}}</span>台</span>
               <span class="red"></span>
-              <span>离线：
+              <span>离线:
                 <span>{{equipment_top.sensor.offline_count}}</span>台</span>
             </p>
           </div>
@@ -60,21 +60,60 @@
              v-if="sandbox_show">
           <div class="item_left">
             <img class="img_box"
-                 src="@/assets/images/setting/sb.png"
+                 :src="ImagesIcon.sandbox"
                  alt="">
           </div>
           <div class="item_right">
             <p class="item_right_title ">沙箱</p>
             <p class="">
               <span class="green"></span>
-              <span>在线：
+              <span>在线:
                 <span>{{equipment_top.sandbox.online_count}}</span>台</span>
               <span class="red"></span>
-              <span>离线：
+              <span>离线:
                 <span>{{equipment_top.sandbox.offline_count}}</span>台</span>
             </p>
           </div>
         </div>
+
+        <div class="mid item ">
+          <div class="item_left">
+            <img class="img_box"
+                 :src="ImagesIcon.management"
+                 alt="">
+          </div>
+          <div class="item_right">
+            <p class="item_right_title">管理平台引擎</p>
+            <p class="">
+              <span class="green"></span>
+              <span>在线:
+                <span>{{equipment_top.platform_engine.online_count}}</span>台</span>
+              <span class="red"></span>
+              <span>离线:
+                <span>{{equipment_top.platform_engine.offline_count}}</span>台</span>
+            </p>
+          </div>
+        </div>
+
+        <div class="mid item ">
+          <div class="item_left">
+            <img class="img_box"
+                 :src="ImagesIcon.managementProbe"
+                 alt="">
+          </div>
+          <div class="item_right">
+            <p class="item_right_title">管理平台引擎(探针)</p>
+            <p class="">
+              <span class="green"></span>
+              <span>在线:
+                <span>{{equipment_top.platform_engine_sensor.online_count}}</span>台</span>
+              <span class="red"></span>
+              <span>离线:
+                <span>{{equipment_top.platform_engine_sensor.offline_count}}</span>台</span>
+            </p>
+          </div>
+        </div>
+
       </div>
       <div class="bottom">
         <div class="btn_box">
@@ -121,8 +160,10 @@
               <template slot-scope="scope">
                 <span v-if="scope.row.type=='1'">探针</span>
                 <span v-if="scope.row.type=='2'">引擎</span>
-                <span v-if="scope.row.type=='3'">引擎/探针</span>
+                <span v-if="scope.row.type=='3'">引擎(探针)</span>
                 <span v-if="scope.row.type=='4'">沙箱</span>
+                <span v-if="scope.row.type=='5'">管理平台引擎</span>
+                <span v-if="scope.row.type=='6'">管理平台引擎(探针)</span>
               </template>
             </el-table-column>
             <el-table-column label='设备IP'
@@ -256,10 +297,16 @@
 
 <script type="text/ecmascript-6">
 import { eventBus } from '@/components/common/eventBus.js';
+import ImagesIcon from "@/assets/js/icon";
 export default {
   name: "system_control_orient",
   data () {
     return {
+      ImagesIcon: ImagesIcon,
+      // "'data:image/png;base64,'+ImagesIcon.engine"
+      // Images: {
+      //   // engine: ImagesIcon.engine
+      // },
       activeDiv: '1',
       equipment_list: {},
       equipment_data: {
@@ -270,7 +317,9 @@ export default {
         engine: {},
         sandbox: {},
         sensor: {},
-        sensor_engine: {},
+        platform_engine: {},
+        platform_engine_sensor: {},
+        engine_sensor: {},
       },
       equipment_pop: {
         show: false,
@@ -301,6 +350,7 @@ export default {
     };
   },
   mounted () {
+    console.log(ImagesIcon);
     this.get_data();
     this.get_top();
     this.get_version();
@@ -894,7 +944,7 @@ export default {
       display: inline-block;
       background: #ff5f5c;
       border-radius: 8px;
-      margin-left: 26px;
+      margin-left: 5px;
     }
     .red_s {
       width: 8px;
@@ -919,7 +969,8 @@ export default {
       margin-bottom: 24px;
       .item {
         // cursor: pointer;
-        width: 324px;
+        // width: 324px;
+        flex: 1;
         height: 108px;
         background: #ffffff;
         border: 1px solid #dddddd;
@@ -927,7 +978,7 @@ export default {
         margin-right: 10px;
         display: flex;
         .item_left {
-          width: 84px;
+          width: 68px;
           height: 108px;
           position: relative;
           .img_box {
@@ -940,8 +991,8 @@ export default {
           }
         }
         .item_right {
+          flex: 1;
           .item_right_title {
-            font-family: PingFangMedium;
             font-size: 18px;
             color: #333333;
             margin-top: 25px;

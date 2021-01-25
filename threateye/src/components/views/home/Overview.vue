@@ -608,7 +608,7 @@ export default {
             symbolSize: 30,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.probe,
+            symbol: 'image://' + ImagesIcon.probe,
             label: {
               normal: {
                 position: "bottom",
@@ -643,7 +643,7 @@ export default {
             symbolSize: 30,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.engine,
+            symbol: 'image://' + ImagesIcon.engine,
             label: {
               normal: {
                 position: "bottom",
@@ -678,7 +678,7 @@ export default {
             symbolSize: 30,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.engineProbe,
+            symbol: 'image://' + ImagesIcon.engineProbe,
             label: {
               normal: {
                 position: "bottom",
@@ -713,7 +713,7 @@ export default {
             symbolSize: 30,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.sandbox,
+            symbol: 'image://' + ImagesIcon.sandbox,
             label: {
               normal: {
                 position: "bottom",
@@ -747,7 +747,7 @@ export default {
             symbolSize: 40,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.management,
+            symbol: 'image://' + ImagesIcon.management,
             label: {
               normal: {
                 position: "bottom",
@@ -781,7 +781,7 @@ export default {
             symbolSize: 40,
             draggable: false,
             category: 0,
-            symbol: ImagesIcon.managementProbe,
+            symbol: 'image://' + ImagesIcon.managementProbe,
             label: {
               normal: {
                 position: "bottom",
@@ -802,7 +802,7 @@ export default {
           this.equipment.echart_array.push(data_item6);
         })
       }
-      var links = this.equipment.echart_array.filter(item => item.next_ip != ''&&item.next_ip != null);
+      var links = this.equipment.echart_array.filter(item => item.next_ip != '' && item.next_ip != null);
       console.log(links);
       links.forEach(ele => {
         var obj = {
