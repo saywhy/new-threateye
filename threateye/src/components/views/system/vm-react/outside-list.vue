@@ -2,9 +2,9 @@
   <div id="outside_list"
        v-loading.fullscreen.lock="loading">
     <div class="outside_content">
-      <div class="content_left content_common">
+      <div class="content_left content_common content_common_ip">
         <p class="title">恶意IP列表：</p>
-        <p>
+        <p class="common_title">
           <span>{{hostip}}/MaliciousIP?uname=账号&passwd=密码</span>
         </p>
         <div class="list_box">
@@ -27,9 +27,9 @@
           </div>
         </div>
       </div>
-      <div class="content_left content_common">
+      <div class="content_left content_common content_common_url">
         <p class="title">恶意域名列表：</p>
-        <p>
+        <p class="common_title">
           <span>{{hostip}}/MaliciousURL?uname=账号&passwd=密码</span>
         </p>
         <div class="list_box">
@@ -52,9 +52,9 @@
           </div>
         </div>
       </div>
-      <div class="content_left content_common">
+      <div class="content_left content_common content_common_hash">
         <p class="title">恶意哈希列表：</p>
-        <p>
+        <p class="common_title">
           <span>{{hostip}}/MaliciousHash?uname=账号&passwd=密码</span>
         </p>
         <div class="list_box">
@@ -358,14 +358,7 @@ export default {
       })
         .then(response => {
           console.log(response);
-          if (response.data.status == 1) {
-            this.$message(
-              {
-                message: response.data.msg,
-                type: 'error',
-              }
-            );
-          } else if (response.data.status == 0) {
+          if (response.data.status == 0) {
             switch (num) {
               case '1':
                 this.get_list('1')
@@ -400,6 +393,13 @@ export default {
               default:
                 break;
             }
+          } else {
+            this.$message(
+              {
+                message: response.data.msg,
+                type: 'error',
+              }
+            );
           }
         })
         .catch(error => {
@@ -542,8 +542,17 @@ export default {
   .outside_content {
     margin-top: 12px;
     display: flex;
+    .content_common_ip {
+      flex: 2;
+    }
+    .content_common_url {
+      flex: 3;
+    }
+    .content_common_hash {
+      flex: 4;
+    }
+
     .content_common {
-      flex: 1;
       word-break: break-all;
       white-space: pre-wrap;
       word-wrap: break-word;
@@ -553,6 +562,9 @@ export default {
         font-size: 16px;
         color: #333333;
         border-bottom: 1px solid #ececec;
+      }
+      .common_title {
+        height: 60px;
       }
       .list_box {
         padding: 18px 0 14px 0;

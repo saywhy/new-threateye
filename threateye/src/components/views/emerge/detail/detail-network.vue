@@ -3247,7 +3247,74 @@ export default {
       if (item == '1') {
         this.$router.push({ path: "/invest/file", query: { sha256: sha256[0].value } });
       }
+      if (item == '2') {
 
+        this.$confirm('本地址会被加入外部动态列表，第三方设备读取后可以对本地址进行告警提示或者拦截。', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          console.log('1111111');
+
+          // var join = ''
+          // // horizontalthreat  横向威胁告警  lateral
+          // // externalthreat  外部威胁告警  outside
+          // // outreachthreat  外联威胁告警  outreath
+          // switch (this.$route.query.type) {
+          //   case 'alert':
+          //     join = '/yiiapi/alert/join-external-dynamics'
+          //     break;
+          //   case 'asset':
+          //     join = '/yiiapi/asset/join-external-dynamics'
+          //     break;
+          //   case 'lateral':
+          //     join = '/yiiapi/horizontalthreat/join-external-dynamics'
+          //     break;
+          //   case 'outside':
+          //     join = '/yiiapi/externalthreat/join-external-dynamics'
+          //     break;
+          //   case 'outreath':
+          //     join = '/yiiapi/outreachthreat/join-external-dynamics'
+          //     break;
+          //   default:
+          //     break;
+          // }
+          this.$axios.post('/yiiapi/linkage/add', {
+            addr: sha256[0].value,
+            type: '3',
+          })
+            .then(response => {
+              console.log(response);
+              if (response.data.status == 0) {
+                this.$message(
+                  {
+                    message: '加入外部动态列表成功!',
+                    type: 'success',
+                  }
+                );
+
+              } else {
+                this.$message(
+                  {
+                    message: response.data.msg,
+                    type: 'error',
+                  }
+                );
+              }
+            })
+            .catch(error => {
+              console.log(error);
+            })
+
+
+
+        }).catch(() => {
+          this.$message({
+            type: 'info',
+            message: '已取消操作'
+          });
+        });
+      }
     },
 
     // 加入外部链接
