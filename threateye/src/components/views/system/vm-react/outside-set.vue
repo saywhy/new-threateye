@@ -23,7 +23,7 @@
           </p>
         </div>
         <div class="list_right">
-          <p class="item_title">恶意哈希列表URL</p>
+          <p class="item_title">恶意哈希列表</p>
           <p class="item_content">
             <span>{{hostip}}/MaliciousHash?uname=账号&passwd=密码</span>
           </p>

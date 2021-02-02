@@ -193,6 +193,10 @@
               <span class="item_li_title">工单状态:</span>
               <span class="item_li_content">{{network_work_order.work_order_status}}</span>
             </li>
+            <li class="item_li">
+              <span class="item_li_title">探针IP:</span>
+              <span class="item_li_content">{{network_times_active.sensor_ip}}</span>
+            </li>
           </ul>
         </div>
       </div>
@@ -994,6 +998,7 @@ export default {
       { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
       { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
       { checked: false, disabled: false, name: "标签", alias: 'labels' },
+      { checked: false, disabled: false, name: "探针IP", alias: 'sensor_ip' },
       { checked: true, disabled: false, name: "状态", alias: 'status' }],
       loading: false,
       network_work_order: {
