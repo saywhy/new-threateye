@@ -25,9 +25,11 @@
       <div class="invest">
         <div class="invest_form invest_form_network">
           <el-form class="common-pattern">
-            <el-row class="common_box" style="padding: 15px 0;">
+            <el-row class="common_box"
+                    style="padding: 15px 0;">
               <!--1-->
-              <el-col :span="24" class="common_box_list">
+              <el-col :span="24"
+                      class="common_box_list">
 
                 <!--告警类型-->
                 <el-input class="s_key1"
@@ -90,7 +92,8 @@
                 </el-select>
               </el-col>
               <!--2-->
-              <el-col :span="24" class="common_box_list common_box_list_network">
+              <el-col :span="24"
+                      class="common_box_list common_box_list_network">
 
                 <!--源地址-->
                 <el-input class="s_key1"
@@ -122,6 +125,19 @@
                      class="el-input__icon el-icon-search"></i>
                 </el-input>
 
+                <!--探针IP-->
+                <el-select class="s_key1"
+                           v-model="params.sensor_ip"
+                           clearable
+                           placeholder="探针IP"
+                           :popper-append-to-body="false">
+                  <el-option v-for="item in options_sensor"
+                             :key="item.value"
+                             :label="item.label"
+                             :value="item.value">
+                  </el-option>
+                </el-select>
+
                 <el-button class="s_btn s_btn1_ok"
                            @click="submitClick();">搜索</el-button>
                 <el-link class="s_link"
@@ -129,7 +145,8 @@
               </el-col>
             </el-row>
             <!--按钮组-->
-            <el-row class="common_btn" style="width: 100%;">
+            <el-row class="common_btn"
+                    style="width: 100%;">
               <el-col :span="24"
                       class="common_btn_list">
                 <el-dropdown @command="change_state"
@@ -167,7 +184,6 @@
                     <el-dropdown-item command="添加到工单">添加到工单</el-dropdown-item>
                   </el-dropdown-menu>
                 </el-dropdown>
-
 
                 <!--配置列-->
                 <el-dropdown class="e_deplay"
@@ -686,6 +702,7 @@ export default {
         { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
         { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
         { checked: false, disabled: false, name: "标签", alias: 'labels' },
+        { checked: false, disabled: false, name: "探针IP", alias: 'sensor_ip' },
         { checked: true, disabled: false, name: "状态", alias: 'status' }],
       sortable:null,
       old_params:{
@@ -700,6 +717,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime:'',
+        sensor_ip:'',
         label: ''
       },
       params: {
@@ -714,6 +732,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime:'',
+        sensor_ip:'',
         label: '',
         sort:'alert_time'
       },
@@ -766,6 +785,9 @@ export default {
           value: "5",
           label: "误报"
         }
+      ],
+      options_sensor: [
+
       ],
       table: {
         tableData: [],
@@ -881,6 +903,7 @@ export default {
   created () {
     this.get_list_source_top5();
     this.get_list_threat_top5();
+    this.get_sensorIP();
     this.get_list_threat();
 
     this.column_deploy();
@@ -912,6 +935,25 @@ export default {
     /**
      * 2020/10/28ycl新加功能
      * */
+
+    //获取探针ip列表
+    get_sensorIP(){
+      this.$axios.get('/yiiapi/site/sensor-list')
+        .then((resp) => {
+          let {
+            status,
+            msg,
+            data
+          } = resp.data;
+          if (status == '0') {
+            var attr = []
+            data.forEach(item => {
+              attr.push({value:item.ip,label:item.ip});
+            })
+            this.options_sensor = attr;
+          }
+        })
+    },
 
     //配置到
     column_deploy () {
@@ -1045,6 +1087,7 @@ export default {
           dest_ip:this.old_params.dest_ip,
           update_stime:this.old_params.update_stime,
           update_etime:this.old_params.update_etime,
+          sensor_ip:this.old_params.sensor_ip,
           label:this.old_params.label,
 
           sort: this.params.sort,
@@ -1118,6 +1161,7 @@ export default {
       this.old_params.dest_ip = this.params.dest_ip;
       this.old_params.update_stime = this.params.update_stime;
       this.old_params.update_etime = this.params.update_etime;
+      this.old_params.sensor_ip = this.params.sensor_ip;
       this.old_params.label = this.params.label;
 
       this.get_list_threat();
@@ -1136,6 +1180,7 @@ export default {
       this.params.update_stime = '';
       this.params.update_etime = '';
       this.params.label = '';
+      this.params.sensor_ip = '';
       //this.params.sort = 'degree';
 
       this.old_params.category = this.params.category;
@@ -1149,6 +1194,7 @@ export default {
       this.old_params.dest_ip = this.params.dest_ip;
       this.old_params.update_stime = this.params.update_stime;
       this.old_params.update_etime = this.params.update_etime;
+      this.old_params.sensor_ip = this.params.sensor_ip;
       this.old_params.label = this.params.label;
 
       $(document.querySelectorAll('.el-button--text')).trigger('click');
@@ -2253,5 +2299,97 @@ export default {
     }
   }
 }
+</style>
+
+<style lang="less">
+  .s_btn_list {
+    position: absolute;
+    top: 30px;
+    right: 0;
+    width: 308px !important;
+    height: 408px !important;
+    background: #ffffff;
+    padding: 20px 20px !important;
+    box-shadow: 0 0 4px 0 rgba(0, 0, 0, 0.24);
+    .s_b_name {
+      height: 30px;
+      line-height: 30px;
+      font-family: PingFangSC-Medium;
+      font-size: 16px;
+      color: #333333;
+      font-weight: bold;
+    }
+    .s_b_list {
+      height: 288px;
+      overflow-y: auto;
+      .item {
+        line-height: 24px;
+        font-family: PingFangSC-Regular;
+        font-size: 16px;
+        color: #333333;
+        /deep/ .el-checkbox {
+          .el-checkbox__label {
+            font-family: PingFangSC-Regular;
+            font-size: 16px;
+            color: #333333;
+          }
+        }
+      }
+      &::-webkit-scrollbar {
+        /*滚动条整体样式*/
+        width: 4px;
+        /*高宽分别对应横竖滚动条的尺寸*/
+        /* border-radius: 6px;*/
+      }
+      &::-webkit-scrollbar-thumb {
+        /*滚动条里面小方块*/
+        border-radius: 6px;
+        background: #0070ff;
+        /*background: red;*/
+      }
+      &::-webkit-scrollbar-track {
+        /*滚动条里面轨道*/
+        border-radius: 6px;
+        background: #f4f4f4;
+      }
+    }
+    .s_b_group {
+      margin-top: 10px;
+      height: 40px;
+      line-height: 50px;
+      text-align: center;
+      /deep/ .s_bg {
+        font-size: 14px;
+        height: 34px;
+        width: 96px;
+        outline: none;
+        margin-right: 8px;
+        line-height: 0;
+        padding: 0;
+        font-family: PingFangMedium;
+        &.s_bg_submit {
+          color: #fff;
+          background: #0070ff;
+          border: 1px solid #0070ff;
+          &:hover {
+            color: #fff;
+            background: #0070ff;
+            border: 1px solid #0070ff;
+          }
+        }
+        &.s_bg_cancel {
+          color: #0070ff;
+          border: 1px solid #0070ff;
+          background-color: #fff;
+          &:hover {
+            color: #0070ff;
+            border: 1px solid #0070ff;
+            background-color: #fff;
+          }
+        }
+      }
+    }
+  }
+  //.el-table th.gutter{display: table-cell!important;}
 </style>
 

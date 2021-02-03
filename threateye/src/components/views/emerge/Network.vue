@@ -14,62 +14,6 @@
         <h3 class="title">告警监测</h3>
         <el-row class="common_box"
                 style="padding: 15px 0;">
-          <!--<el-col :span="24"
-                  class="common_box_list">
-            &lt;!&ndash;搜索关键词&ndash;&gt;
-            <el-input class="s_key"
-                      placeholder="搜索关键词"
-                      v-model="params.key"
-                      clearable>
-              <i slot="prefix"
-                 class="el-input__icon el-icon-search"></i>
-            </el-input>
-            &lt;!&ndash;时间&ndash;&gt;
-            <vm-emerge-picker @changeTime='changeTime'></vm-emerge-picker>
-            &lt;!&ndash;失陷确定性&ndash;&gt;
-            <el-select class="s_key s_key_types"
-                       v-model="params.threat"
-                       clearable
-                       placeholder="失陷确定性"
-                       :popper-append-to-body="false">
-              <el-option v-for="item in options_threat"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-            &lt;!&ndash;威胁等级&ndash;&gt;
-            <el-select class="s_key"
-                       v-model="params.degree"
-                       clearable
-                       placeholder="威胁等级"
-                       :popper-append-to-body="false">
-              <el-option v-for="item in options_degrees"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-            &lt;!&ndash;处理状态&ndash;&gt;
-            <el-select class="s_key"
-                       v-model="params.status"
-                       clearable
-                       placeholder="处理状态"
-                       :popper-append-to-body="false">
-              <el-option v-for="item in options_status"
-                         :key="item.value"
-                         :label="item.label"
-                         :value="item.value">
-              </el-option>
-            </el-select>
-            <el-button class="s_btn"
-                       @click="submitClick();">搜索</el-button>
-            <el-link class="s_link"
-                     @click="resetClick();">重置</el-link>
-
-            <el-button class="s_btn_edit"
-                       @click="export_box">导出</el-button>
-          </el-col>-->
           <!--1-->
           <el-col :span="24"
                   class="common_box_list">
@@ -168,10 +112,27 @@
                  class="el-input__icon el-icon-search"></i>
             </el-input>
 
+            <!--探针IP-->
+            <el-select class="s_key1"
+                       v-model="params.sensor_ip"
+                       clearable
+                       placeholder="探针IP"
+                       :popper-append-to-body="false">
+              <el-option v-for="item in options_sensor"
+                         :key="item.value"
+                         :label="item.label"
+                         :value="item.value">
+              </el-option>
+            </el-select>
+
             <el-button class="s_btn s_btn1_ok"
                        @click="submitClick();">搜索</el-button>
             <el-link class="s_link"
                      @click="resetClick();">重置</el-link>
+          </el-col>
+          <!--3-->
+          <el-col :span="24"
+                  class="common_box_list common_box_list_network">
             <el-button class="s_btn_edit"
                        @click="export_box">导出</el-button>
           </el-col>
@@ -724,6 +685,7 @@ export default {
       { checked: false, disabled: false, name: "更新时间", alias: 'updated_at' },
       { checked: false, disabled: false, name: "告警次数", alias: 'alert_count' },
       { checked: false, disabled: false, name: "标签", alias: 'labels' },
+      { checked: false, disabled: false, name: "探针IP", alias: 'sensor_ip' },
       { checked: true, disabled: false, name: "状态", alias: 'status' }],
       sortable: null,
       echarts_data: {},
@@ -743,6 +705,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime: '',
+        sensor_ip:'',
         label: ''
       },
       params: {
@@ -757,6 +720,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime: '',
+        sensor_ip:'',
         label: '',
         sort: 'alert_time'
       },
@@ -809,6 +773,9 @@ export default {
           value: "5",
           label: "误报"
         }
+      ],
+      options_sensor: [
+
       ],
       edit_tag: {
         tag_list: [],
@@ -885,7 +852,6 @@ export default {
         eachPage: 10,
         multipleSelection: []
       },
-
       //添加到工单
       add_state_change: false,
       table_add_works: {
@@ -921,6 +887,8 @@ export default {
   mounted () {
     this.check_passwd();
 
+    this.get_sensorIP();
+
     this.get_echarts();
 
     this.get_list_risk();
@@ -953,6 +921,25 @@ export default {
                 type: 'warning',
               }
             );
+          }
+        })
+    },
+
+    //获取探针ip列表
+    get_sensorIP(){
+      this.$axios.get('/yiiapi/site/sensor-list')
+        .then((resp) => {
+          let {
+            status,
+            msg,
+            data
+          } = resp.data;
+          if (status == '0') {
+            var attr = []
+            data.forEach(item => {
+              attr.push({value:item.ip,label:item.ip});
+            })
+            this.options_sensor = attr;
           }
         })
     },
@@ -1115,6 +1102,7 @@ export default {
           dest_ip: this.old_params.dest_ip,
           update_stime: this.old_params.update_stime,
           update_etime: this.old_params.update_etime,
+          sensor_ip:this.old_params.sensor_ip,
           label: this.old_params.label,
 
           sort: this.params.sort,
@@ -1184,6 +1172,7 @@ export default {
       this.old_params.dest_ip = this.params.dest_ip;
       this.old_params.update_stime = this.params.update_stime;
       this.old_params.update_etime = this.params.update_etime;
+      this.old_params.sensor_ip = this.params.sensor_ip;
       this.old_params.label = this.params.label;
 
       this.get_list_risk();
@@ -1202,7 +1191,9 @@ export default {
       this.params.dest_ip = '';
       this.params.update_stime = '';
       this.params.update_etime = '';
+      this.params.sensor_ip = '';
       this.params.label = '';
+
       //this.params.sort = 'degree';
 
       this.old_params.category = this.params.category;
@@ -1216,6 +1207,7 @@ export default {
       this.old_params.dest_ip = this.params.dest_ip;
       this.old_params.update_stime = this.params.update_stime;
       this.old_params.update_etime = this.params.update_etime;
+      this.old_params.sensor_ip = this.params.sensor_ip;
       this.old_params.label = this.params.label;
 
       $(document.querySelectorAll('.el-button--text')).trigger('click');
