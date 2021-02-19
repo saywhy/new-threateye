@@ -242,8 +242,7 @@ export const asyncRouterMap = [
     meta: {
       title: '处置',
       icon: 'e-nav-handle',
-      auth: '13',
-      role: ['admin']
+      auth: '13'
     },
     component: Layout,
     children: [{
