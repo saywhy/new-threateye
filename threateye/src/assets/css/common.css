@@ -233,18 +233,11 @@ textarea {
 }
 
 
-/* .el-table thead th {
-  background: #f8f8f8
-} */
-
 
 .el-table--border th {
   border-right: 1px solid #EBEEF5;
 }
 
-/* .el-table--border th:nth-child(1) {
-  border-left: 1px solid #EBEEF5;
-} */
 
 .el-table::before {
   height: 0;
