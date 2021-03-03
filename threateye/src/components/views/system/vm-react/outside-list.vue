@@ -307,6 +307,7 @@ export default {
       var addr_params = ''
       switch (num) {
         case '1':
+          var rexIp = /^((2[0-4]\d|25[0-5]|[01]?\d\d?)\.){3}(2[0-4]\d|25[0-5]|[01]?\d\d?)$/
           if (this.outside_pop.ip.ip == '') {
             this.$message(
               {
@@ -315,10 +316,25 @@ export default {
               }
             );
             return false
+          } else {
+            if (!rexIp.test(this.outside_pop.ip.ip)) {
+              this.$message(
+                {
+                  message: 'IP格式不正确',
+                  type: 'error',
+                }
+              );
+              return false
+            }
           }
           addr_params = this.outside_pop.ip.ip
           break;
         case '2':
+          var urlrex1 = /^(?=^.{3,255}$)[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+$/
+          var urlrex2 = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*$/
+          var urlrex3 = /^(?=^.{3,255}$)(http(s)?:\/\/)?(www\.)?[a-zA-Z0-9][-a-zA-Z0-9]{0,62}(\.[a-zA-Z0-9][-a-zA-Z0-9]{0,62})+(:\d+)*(\/\w+\.\w+)*([\?&]\w+=\w*)*$/
+          var urlrex4 = new RegExp( //这是正则表达式
+            "(^(((https|http|ftp|file|rtsp|mms)://)|www\\.)([a-zA-Z0-9\-]))|^localhost|^((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}|(([a-zA-Z0-9])(\\.(com|cn|io|html|htm|top|ltd|net|xin|vip|store|shop|wang|cloud|xyz|ren|tech|online|site|ink|link|love|art|fun|club|cc|website|press|space|beer|luxe|video|group|fit|yoga|net|org|pro|biz|info|design|work|mobi|kim|pub|org|name|tv|co|asia|red|live|wiki|gov|cn|life|world|run|show|city|gold|today|plus|cool|icu|中国|网店|中文网|公司|网络|集团|商城|招聘|佛山|广东|网址|在线|我爱你|商标|餐厅))(:[0-9]{1,4})?(/?))$")
           if (this.outside_pop.url.url == '') {
             this.$message(
               {
@@ -327,10 +343,21 @@ export default {
               }
             );
             return false
+          } else {
+            if (!urlrex1.test(this.outside_pop.url.url) || !urlrex2.test(this.outside_pop.url.url) || !urlrex3.test(this.outside_pop.url.url) || !urlrex4.test(this.outside_pop.url.url)) {
+              this.$message(
+                {
+                  message: '域名格式不正确',
+                  type: 'error',
+                }
+              );
+              return false
+            }
           }
           addr_params = this.outside_pop.url.url
           break;
         case '3':
+          var rexHash = /^[0-9a-f]{32}$/
           if (this.outside_pop.hash.hash == '') {
             this.$message(
               {
@@ -339,6 +366,17 @@ export default {
               }
             );
             return false
+          } else {
+            if (!rexHash.test(this.outside_pop.hash.hash)) {
+              this.$message(
+                {
+                  message: '哈希格式不正确',
+                  type: 'error',
+                }
+              );
+              return false
+            }
+
           }
           addr_params = this.outside_pop.hash.hash
           break;
