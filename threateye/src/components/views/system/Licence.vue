@@ -184,37 +184,8 @@ export default {
     this.get_data();
     this.get_license();
     this.get_version();
-    this.check_passwd();
   },
   methods: {
-    // 测试密码过期
-    check_passwd () {
-      this.$axios.get('/yiiapi/site/check-passwd-reset')
-        .then((resp) => {
-          let {
-            status,
-            msg,
-            data
-          } = resp.data;
-          if (status == '602') {
-            this.$message(
-              {
-                message: msg,
-                type: 'warning',
-              }
-            );
-            eventBus.$emit('reset')
-          }
-          if (status == '600') {
-            this.$message(
-              {
-                message: msg,
-                type: 'warning',
-              }
-            );
-          }
-        })
-    },
     get_data () {
       this.$axios.get('/yiiapi/license/get', {
         params: {
@@ -225,6 +196,7 @@ export default {
         .then(response => {
           console.log(response);
           if (response.data.status == 602) {
+            eventBus.$emit('reset')
             return false
           }
           this.license_list = response.data.data.license
@@ -236,6 +208,9 @@ export default {
         .catch(error => {
           console.log(error);
         })
+
+
+
     },
     // 获取license版本
     get_license () {

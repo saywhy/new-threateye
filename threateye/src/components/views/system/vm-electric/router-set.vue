@@ -221,7 +221,7 @@ export default {
   },
   mounted () {
     this.get_data();
-    this.check_passwd();
+    // this.check_passwd();
   },
   methods: {
     // 测试密码过期
@@ -264,6 +264,20 @@ export default {
         .then(response => {
           console.log(response);
           this.router_data.loading = false
+          let {
+            status,
+            msg,
+            data
+          } = response.data;
+          if (status == '602') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+            eventBus.$emit('reset')
+          }
           this.router_list = response.data.data
           this.router_list.data.forEach((item, index) => {
             item.index_cn = index + 1

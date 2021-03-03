@@ -99,7 +99,7 @@ export default {
   },
   mounted () {
     this.get_data()
-    this.check_passwd()
+    // this.check_passwd()
   },
   methods: {
     // 测试密码过期
@@ -133,7 +133,16 @@ export default {
     get_data () {
       this.$axios.get('/yiiapi/seting/get-proxy-server')
         .then(response => {
-          let { status, data } = response.data;
+          let { status, data, msg } = response.data;
+          if (status == '602') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+            eventBus.$emit('reset')
+          }
           console.log(data.data[0].PROXYCONF);
           this.proxy.type = data.data[0].PROXYCONF.type
           this.proxy.ip = data.data[0].PROXYCONF.ip

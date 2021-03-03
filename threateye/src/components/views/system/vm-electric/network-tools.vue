@@ -52,7 +52,7 @@ export default {
     }
   },
   mounted () {
-    this.check_passwd()
+    // this.check_passwd()
   },
   methods: {
     // 测试密码过期
@@ -107,6 +107,15 @@ export default {
             msg,
             data
           } = resp.data;
+          if (status == '602') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+            eventBus.$emit('reset')
+          }
           if (status == 1) {
             this.$message(
               {

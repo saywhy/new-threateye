@@ -180,6 +180,7 @@
       </div>
     </el-dialog>
   </div>
+
 </template>
 
 <script type="text/ecmascript-6">
@@ -405,6 +406,17 @@ export default {
         .catch(error => {
           console.log(error);
         })
+
+
+
+
+
+
+
+
+
+
+
     },
     add_url () {
       this.outside_pop.url.show = true;

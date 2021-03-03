@@ -143,7 +143,7 @@ export default {
   },
   mounted () {
     this.get_data()
-    this.check_passwd()
+    // this.check_passwd()
   },
 
   methods: {
@@ -265,6 +265,21 @@ export default {
       this.$axios.get('/yiiapi/seting/get-network')
         .then(response => {
           this.network_loading = false
+          let {
+            status,
+            msg,
+            data
+          } = response.data;
+          if (status == '602') {
+            this.$message(
+              {
+                message: msg,
+                type: 'warning',
+              }
+            );
+            eventBus.$emit('reset')
+          }
+
           this.network = response.data.data.data;
           this.change_name(this.network[0].NAME)
         })
