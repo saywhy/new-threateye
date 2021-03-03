@@ -15,11 +15,11 @@
                      name="second">
           <syslog-set v-if="tab_show.second"></syslog-set>
         </el-tab-pane>
-        <el-tab-pane label="SNMP配置"
+        <!-- <el-tab-pane label="SNMP配置"
                      class="tabs-item"
                      name="fourth">
           <snmp-set v-if="tab_show.fourth"></snmp-set>
-        </el-tab-pane>
+        </el-tab-pane> -->
         <el-tab-pane label="故障日志"
                      class="tabs-item"
                      name="third">
@@ -33,14 +33,14 @@
 import auditLog from "@/components/views/system/vm-record/audit-log";
 import faultLog from "@/components/views/system/vm-record/fault-log";
 import syslogSet from "@/components/views/system/vm-record/syslog-set";
-import snmpSet from "@/components/views/system/vm-record/snmp-set";
+// import snmpSet from "@/components/views/system/vm-record/snmp-set";
 import { eventBus } from '@/components/common/eventBus.js';
 export default {
   components: {
     auditLog,
     faultLog,
     syslogSet,
-    snmpSet
+    // snmpSet
   },
   name: "system_control_record",
   data () {
