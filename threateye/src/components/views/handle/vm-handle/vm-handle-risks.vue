@@ -963,7 +963,7 @@ export default {
           this.dropCol = [];
           let { status, data } = resp.data;
           if (status == 0) {
-            let config = data.config.fields;
+            let config = data.config;
 
             // console.log(config)
             for (var key of config) {
