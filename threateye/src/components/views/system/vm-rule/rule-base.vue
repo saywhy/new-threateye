@@ -10,7 +10,7 @@
         <span>{{item.time}}</span>
       </span>
       <span class="item_time">上次成功时间：
-        <span>{{item.time}}</span>
+        <span>{{item.success_time}}</span>
       </span>
       <span class="item_status">{{item.status_cn}}</span>
     </p>
@@ -26,7 +26,7 @@
         <span>{{item.time}}</span>
       </span>
       <span class="item_time">上次成功时间：
-        <span>{{item.time}}</span>
+        <span>{{item.success_time}}</span>
       </span>
       <span class="item_status">{{item.status_cn}}</span>
     </p>

@@ -8,7 +8,7 @@
                    @change="set_switch">
         </el-switch>
       </p>
-      <p class="top_tips">本功能实现和第三方设备如防火墙的联动，第三方设备通过URL地址获取恶意IP列表以及恶意域名列表做告警提示或者拦截。</p>
+      <p class="top_tips">本功能实现和第三方系统如防火墙、防病毒软件等的联动。第三方系统通过URL地址获取恶意IP、恶意URL以及恶意哈希列表做告警提示或者拦截。</p>
       <div class="malice_list">
         <div class="list_left">
           <p class="item_title">恶意IP列表</p>
