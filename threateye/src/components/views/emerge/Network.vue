@@ -705,7 +705,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime: '',
-        sensor_ip:'',
+        sensor_ip: '',
         label: ''
       },
       params: {
@@ -720,7 +720,7 @@ export default {
         dest_ip: '',
         update_stime: '',
         update_etime: '',
-        sensor_ip:'',
+        sensor_ip: '',
         label: '',
         sort: 'alert_time'
       },
@@ -914,19 +914,11 @@ export default {
             );
             eventBus.$emit('reset')
           }
-          if (status == '600') {
-            this.$message(
-              {
-                message: msg,
-                type: 'warning',
-              }
-            );
-          }
         })
     },
 
     //获取探针ip列表
-    get_sensorIP(){
+    get_sensorIP () {
       this.$axios.get('/yiiapi/site/sensor-list')
         .then((resp) => {
           let {
@@ -937,7 +929,7 @@ export default {
           if (status == '0') {
             var attr = []
             data.forEach(item => {
-              attr.push({value:item.ip,label:item.ip});
+              attr.push({ value: item.ip, label: item.ip });
             })
             this.options_sensor = attr;
           }
@@ -1102,7 +1094,7 @@ export default {
           dest_ip: this.old_params.dest_ip,
           update_stime: this.old_params.update_stime,
           update_etime: this.old_params.update_etime,
-          sensor_ip:this.old_params.sensor_ip,
+          sensor_ip: this.old_params.sensor_ip,
           label: this.old_params.label,
 
           sort: this.params.sort,

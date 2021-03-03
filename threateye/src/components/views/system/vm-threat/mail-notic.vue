@@ -184,14 +184,6 @@ export default {
             );
             eventBus.$emit('reset')
           }
-          if (status == '600') {
-            this.$message(
-              {
-                message: msg,
-                type: 'warning',
-              }
-            );
-          }
         })
     },
     get_data () {
