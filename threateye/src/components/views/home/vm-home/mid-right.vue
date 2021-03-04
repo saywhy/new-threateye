@@ -23,9 +23,10 @@ export default {
     let chartData = this.mid_right;
 
     chartData.forEach((item, index, array) => {
-      this.threat_type.type.push(item.alert_type);
-      this.threat_type.num.push(item.total_count);
+      this.threat_type.type.unshift(item.alert_type);
+      this.threat_type.num.unshift(item.total_count);
     });
+
   },
   mounted () {
     this.graph();
@@ -35,8 +36,9 @@ export default {
 
       let type = this.threat_type.type;
       let num = this.threat_type.num;
-      if (num.length && num.length > 0){
-        num = num.reverse();
+      if (num.length == 0){
+        //num = num.reverse();
+        return false;
       }
 
       //let maxNum = Math.max(...num);
