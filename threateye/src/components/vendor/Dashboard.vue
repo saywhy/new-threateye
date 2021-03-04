@@ -55,7 +55,7 @@ export default {
     padding: 0 24px;
     position: fixed;
     width: 100%;
-    z-index: 1000;
+    z-index: 1000000;
     height: auto !important;
   }
 
