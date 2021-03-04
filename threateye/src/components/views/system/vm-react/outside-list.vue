@@ -562,6 +562,13 @@ export default {
                   type: 'success',
                 }
               );
+            } else if (status == 500) {
+              this.$message(
+                {
+                  message: msg,
+                  type: 'error',
+                }
+              );
             }
           })
           .catch(error => {
