@@ -171,6 +171,11 @@ export default {
               }
             );
             eventBus.$emit('reset')
+          } else if (status == 1) {
+            this.$message({
+              type: 'warning',
+              message: msg
+            });
           }
         })
     },
@@ -194,9 +199,14 @@ export default {
       })
         .then(response => {
           this.flow_search.loading = false
-          let { status, data } = response.data;
+          let { status, data, msg } = response.data;
           if (status == '602') {
             return false
+          } else if (status == 1) {
+            this.$message({
+              type: 'warning',
+              message: msg
+            });
           }
           // if (data.count > 10000) {
           //   this.$message({
