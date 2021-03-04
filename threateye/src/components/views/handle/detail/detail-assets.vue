@@ -1490,7 +1490,7 @@ export default {
           let { status, data } = resp.data;
 
           if (status == 0) {
-            let config = data.config.fields;
+            let config = data.config;
             for (var key of config) {
               this.fieldList.forEach(item => {
                 if (item.alias == key) {
