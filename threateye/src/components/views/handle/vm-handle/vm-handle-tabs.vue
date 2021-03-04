@@ -34,6 +34,21 @@
           ]
         }
       }
+    },
+    created() {
+
+      if(this.data_top.total == '' || this.data_top.total == null){
+        this.tabsData.data[0].count = 0;
+      }
+      if(this.data_top.high == '' || this.data_top.high == null){
+        this.tabsData.data[1].count = 0;
+      }
+      if(this.data_top.medium == '' || this.data_top.medium == null){
+        this.tabsData.data[2].count = 0;
+      }
+      if(this.data_top.low == '' || this.data_top.low == null){
+        this.tabsData.data[3].count = 0;
+      }
     }
   }
 </script>
