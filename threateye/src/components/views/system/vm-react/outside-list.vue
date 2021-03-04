@@ -553,6 +553,7 @@ export default {
             let {
               status,
               msg,
+              message,
               data
             } = response.data;
             if (status == 0) {
@@ -565,7 +566,7 @@ export default {
             } else if (status == 500) {
               this.$message(
                 {
-                  message: msg,
+                  message: message,
                   type: 'error',
                 }
               );

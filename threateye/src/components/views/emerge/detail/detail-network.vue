@@ -132,7 +132,7 @@
             </li>
             <li class="item_li">
               <span class="item_li_title">更新时间:</span>
-              <span class="item_li_content">{{network_times_active.update_time |time}}</span>
+              <span class="item_li_content">{{network_times[0].update_time |time}}</span>
             </li>
             <li class="item_li">
               <span class="item_li_title">威胁指标:</span>
@@ -166,7 +166,7 @@
 
             <li class="item_li">
               <span class="item_li_title">告警次数:</span>
-              <span class="item_li_content">{{network_times_active.alert_count}}</span>
+              <span class="item_li_content">{{network_times[0].alert_count}}</span>
             </li>
             <li class="item_li">
               <span class="item_li_title">标签:</span>
@@ -257,7 +257,7 @@
                   <span class="info_top_item_content"
                         v-if="value.name=='SHA256'">
                     <el-dropdown @command="change_sha256"
-                                 trigger="click"
+                                 trigger="hover"
                                  class="src_dropdown_box"
                                  placement='bottom-start'
                                  size='148'>
