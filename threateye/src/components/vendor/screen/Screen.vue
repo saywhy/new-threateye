@@ -65,7 +65,7 @@
         <div class="list-item list-item-bottom"
              :class="{'active':!close}">
           <header class="title title-flow">
-            <span class="t1">协议统计
+            <span class="t1">实时流量统计
               <span class="t11">单位(P/s)</span>
             </span>
             <span class="t2">实时威胁检测</span>
@@ -428,20 +428,26 @@ export default {
         &.title-flow {
           position: relative;
           color: #fff;
-          .t11 {
-            opacity: 0.6;
-            font-family: PingFangSC-Regular;
-            font-size: 12px;
-            color: #ffffff;
-            margin-left: 12px;
+          .t1{
+            color: #00d7e9;
+            .t11 {
+              opacity: 0.6;
+              font-family: PingFangSC-Regular;
+              font-size: 12px;
+              color: #fff;
+              margin-left: 12px;
+            }
           }
+
           .t2 {
             position: absolute;
             left: 350px;
+            color: #00d7e9;
           }
           .t3 {
             position: absolute;
             right: 110px;
+            color: #00d7e9;
           }
         }
       }

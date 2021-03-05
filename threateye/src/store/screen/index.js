@@ -18,7 +18,7 @@ export default {
       {name: '关注告警',alias:'attentionAlarm', flag: false, aside_id: 6},
       {name: '外连国家和地区TOP5',alias:'ExternalCountryTop5', flag: false, aside_id: 7},
       {name: '风险趋势',alias:'riskTrend', flag: false, aside_id: 8},
-      {name: '实时流量统计',alias:'threatRange', flag: false, aside_id: 9}],
+      {name: '威胁排行',alias:'threatRange', flag: false, aside_id: 9}],
     //顶部数据
     topLists: [{name:'风险资产数',alias:'risk_asset_count', flag: false, top_id: 0,num:[0,0,0,0,0]},
       {name: '外连资产数',alias:'outreachthreat_assets_count', flag: false, top_id: 1,num:[0,0,0,0,0]},
@@ -49,8 +49,8 @@ export default {
         if(item.alias == 'ExternalCountryTop5'){
           item.name = '外连国家和地区TOP5';
         }
-        if(item.name == '威胁排行'){
-          item.name = '实时流量统计';
+        if(item.name == '实时流量统计'){
+          item.name = '威胁排行';
         }
       });
       state.asideLists = args;
