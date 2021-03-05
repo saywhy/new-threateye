@@ -223,6 +223,22 @@ export default {
             });
             this.mail.alertEmail_list[this.mail.alertEmail_list.length - 1].icon = true
           }
+          this.checkList = []
+          data.degree.forEach(element => {
+            switch (element) {
+              case 'high':
+                this.checkList.push('高危')
+                break;
+              case 'midium':
+                this.checkList.push('中危')
+                break;
+              case 'low':
+                this.checkList.push('低危')
+                break;
+              default:
+                break;
+            }
+          });
 
         })
         .catch(error => {
